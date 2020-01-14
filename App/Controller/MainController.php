@@ -10,7 +10,4 @@ class MainController extends MasterController {
 	{
 		$this->render("main");
 	}
-
-
-	
 }

@@ -1,9 +1,19 @@
 @charset "UTF-8";
 @import "/css/fa/css/all.css";
+@font-face {
+	src: url("/css/noto-r.otf");
+	font-family: 'notor';
+}
+
+@font-face {
+	src: url("/css/notob.otf");
+	font-family: 'notob';
+}
 
 * {
 	margin: 0;
 	padding: 0;
+	font-family: 'noto-r';
 	box-sizing: border-box;
 }
 
@@ -26,9 +36,10 @@ body {
 }
 
 header {
-	width: 100%;
+	width: calc(100% - 250px);
 	height: 65px;
-	background-color: #56cb8d;
+	right: 0;
+	background-color: #3dc37d;
 	position: fixed;
 }
 
@@ -37,9 +48,10 @@ nav {
 	height: calc(100vh - 65px);
 	position: fixed;
 	bottom: 0;
+	left: 0;
 	background-color: #fff1;
 	z-index: 100;
-	box-shadow: 0px 2px 2px 1px #0001;
+	box-shadow: 1px 2px 3px 1px #0001;
 }
 
 #main {
@@ -61,10 +73,11 @@ nav {
 	width: 250px;
 	height: 65px;
 	display: flex;
-	position: relative;
+	position: fixed;
+	left: 0;
+	top: 0;
 	align-items: center;
-	cursor: pointer;
-	z-index: 101;
+	z-index: 10;
 	background-color: #57ca8d;
 }
 
@@ -72,12 +85,175 @@ nav {
 	width: 121px;
 	height: 37px;
 	position: relative;	
+	cursor: pointer;
 	left: 20px;
+	transform: scale(1.0);
+	transition: transform .2s;
 }
 
 .logo-container > i {
 	color: #fff;
 	position: absolute;
 	right: 20px;
-	font-size: 25px;
+	font-size: 23px;
+}
+
+#logo:hover {
+	transform: scale(1.01);
+}
+
+nav > .tab1 {
+	width: 100%;
+	position: relative;
+}
+
+nav > .tab1 > h1 {
+	font-size: 15px;
+	color: #3a5bab;
+	position: relative;
+	font-weight: bolder;
+	margin-top: 12px;
+	margin-left: 16px;
+	font-family: "notob";
+}
+
+nav > .tab1 > .tab2 {
+	width: 80%;
+	margin: 0 auto;
+	margin-top: 15px;
+	position: relative;
+}
+
+nav > .tab1 > .tab2 > .tab2-top {
+	display: flex;
+	align-items: center;
+	position: relative;
+}
+
+nav > .tab1 > .tab2 > .tab2-top > i {
+	color: #ccc;
+	font-size: 23px;
+
+}
+
+nav > .tab1 > .tab2 > .tab2-top > span {
+	font-weight: 700;
+	color: #222;
+	font-family: "notob";
+	font-size: 13px;
+	margin-left: 10px;
+}
+
+nav > .tab1 > .tab2 > .tab2-top > i:last-child {
+	font-size: 16px;
+	cursor: pointer;
+	position: absolute;
+	right: 10px;
+	color: #ccc;
+}
+
+nav > .tab1 > .tab2 > .tab2-top > i:last-child:hover {
+	color: #bbb;	
+}
+
+nav > .tab1 > .tab2 > ul {
+	width: 90%;
+	margin: 12px auto;
+	border-left: 2px solid #ddd;
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+}
+
+nav > .tab1 > .tab2 > ul > li {
+	width: 95%;
+	border-radius: 5px;
+	height: 35px;
+	position: relative;
+	display: flex;
+	align-items: center;
+	cursor: pointer;
+	margin-top: 5px;
+}
+
+nav > .tab1 > .tab2 > ul > li:hover {
+	background-color: #fafafa;
+}
+
+nav > .tab1 > .tab2 > ul > li.active {
+	background-color: #dff1ff;
+	color: #5b72b9;
+}
+
+nav > .tab1 > .tab2 > ul > li.active > a {
+	color: #456aad;
+	font-weight: bolder;
+}
+
+nav > .tab1 > .tab2 > ul > li > a {
+	font-family: "notob";
+	font-weight: bolder;
+	margin-left: 10px;
+	color: #a8a8ac;
+	font-size: 13px;
+}
+
+.search-box {
+	width: auto;
+	height: 100%;
+	position: relative;
+	align-items: center;
+	display: flex;
+	left: 20px;
+}
+
+#search-btn {
+	width: 40px;
+	height: 40px;
+	border-radius: 10px;
+	border: none;
+	/*border: 1px solid #fff;*/
+	outline: none;
+	position: absolute;
+	left: 20px;
+	cursor: pointer;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: #fff;
+	background-color: #39ae74;
+	font-size: 14px;
+	z-index: 10;
+}
+
+#search-input {
+	height: 40px;
+	border-radius: 10px;
+	position: relative;
+	left: 35px;
+	outline: none;
+	background-color: #39ae74;
+	border: none;
+	padding-left: 35px;
+	padding-right: 10px;
+	width: 0px;
+	display: none;
+	max-width: 400px;
+	font-weight: lighter;
+	font-family: "notor";
+	font-size: 14px;
+	color: #fff;
+}
+
+#search-input::placeholder {
+	color: #fff;
+}
+
+#virtual_dom {
+	font-size: 14px;
+	font-weight: lighter;
+	font-family: "notor";
+	padding-left: 35px;
+	padding-right: 10px;
 }
