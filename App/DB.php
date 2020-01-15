@@ -11,7 +11,7 @@ class DB {
 		if(self::$con==null)
 		{
 			self::$con = new \PDO("mysql:host=gondr.asuscomm.com; 
-				dbname=yy_10122;charset=utf8mb4;","yy_10122","");
+				dbname=yy_10122;charset=utf8mb4;","yy_10122","1234");
 		}
 
 		return self::$con;

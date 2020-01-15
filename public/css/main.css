@@ -216,7 +216,6 @@ nav > .tab1 > .tab2 > ul > li > a {
 	/*border: 1px solid #fff;*/
 	outline: none;
 	position: absolute;
-	left: 20px;
 	cursor: pointer;
 	display: flex;
 	justify-content: center;
@@ -231,7 +230,7 @@ nav > .tab1 > .tab2 > ul > li > a {
 	height: 40px;
 	border-radius: 10px;
 	position: relative;
-	left: 35px;
+	left: 15px;
 	outline: none;
 	background-color: #39ae74;
 	border: none;
@@ -257,3 +256,85 @@ nav > .tab1 > .tab2 > ul > li > a {
 	padding-left: 35px;
 	padding-right: 10px;
 }
+
+
+header > .user-box {
+	position: absolute;
+	width: auto;
+	height: 100%;
+	right: 0;
+	top: 0;
+}
+
+.user-box > .user-container {
+	width: 100%;
+	height: 100%;
+	position: relative;
+	display: flex;
+	align-items: center;
+}
+
+.user-box > .user-container > .user-menu {
+	position: relative;
+	width: 65px;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+header > .user-box > .user-container::before {
+	width: 1px;
+	content: "";
+	height: 30px;
+	background-color: #fff6;
+	position: absolute;
+	right: 60px;
+}
+
+header > .user-box > .user-container > .user-menu > i {
+	cursor: pointer;
+	color: #fff;
+	font-size: 23px;
+}
+
+header > .user-box > .user-container > .user-info {
+	width: auto;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	margin-right: 30px;
+}
+
+header > .user-box > .user-container > .user-info > .user-img {
+	width: 45px;
+	height: 45px;
+	border-radius: 100%;
+	background-color: #0003;
+	color: #fff;
+	font-size: 45px;
+	font-weight: lighter;
+}
+
+header > .user-box > .user-container > .user-info > .user-text {
+	margin-left: 25px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.user-info > .user-text > span {
+	text-align: center;
+}
+
+.user-text > span.username {
+	color: #fff;
+	font-size: 15px;
+	font-weight: bolder;
+}
+
+.user-text > span.usernick {
+	font-size: 13px;
+	color: #fff9;
+}
+

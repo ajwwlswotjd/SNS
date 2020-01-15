@@ -20,6 +20,29 @@
 				</button>
 				<input type="text" name="value" placeholder="" id="search-input">
 			</form>
+
+			<div class="user-box">
+				<div class="user-container">
+					<div class="user-info">
+						<img src="/imgs/vkeod1.jpg" alt="" class="user-img">
+						<!-- <i class="user-img far fa-user-circle"></i> -->
+
+						<div class="user-text">
+							<span class="username">
+								정재성인척하는정재성인척하는정재성
+							</span>
+
+							<span class="usernick">
+								다른모든눈송이와아주비슷하게생긴단하나의눈송이
+							</span>
+						</div>
+					</div>
+
+					<div class="user-menu">
+						<i class="fas fa-bars"></i>
+					</div>
+				</div>
+			</div>
 		</header>
 
 		<nav>

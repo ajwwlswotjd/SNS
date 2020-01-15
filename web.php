@@ -2,4 +2,5 @@
 
 use Gondr\Route;
 
-Route::get("/","MainController@index");
+Route::get("/",__SIGN ? "MainController@index" : "MainController@login");
+Route::get("join","MainController@join");

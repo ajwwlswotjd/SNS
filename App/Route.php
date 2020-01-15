@@ -20,8 +20,8 @@ class Route
 				return;
 			}
 		}
-
-		echo "존재하지 않는 페이지 이거나 권한이 없습니다.";
+		
+		require __ROOT . "/views/error.php";
 		exit;
 	}
 
