@@ -1,9 +1,16 @@
 @charset "UTF-8";
-
+@import url('https://fonts.googleapis.com/css?family=Lexend+Deca&display=swap');
+@import "/css/fa/css/all.min.css";
 * {
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
+	font-family: 'Lexend Deca', sans-serif;
+}
+
+body {
+	width: 100%;
+	height: 100vh;
 }
 
 li {
@@ -12,5 +19,167 @@ li {
 
 a {
 	text-decoration: none;
+}
+
+.container {
+	width: 100%;
+	height: 100vh;
+	position: relative;
+	background-image: linear-gradient(to right, rgba(26,102,156,.7), rgba(23,194,174,.7)) ,url(/imgs/test1.jpg);
+	background-position: center center;
+	background-size: cover;
+	background-repeat: no-repeat;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+#join-form {
+	position: relative;
+}
+
+.form-box {
+	width: 600px;
+	height: 650px;
+	border-radius: 10px;
+	background-color: #fff;
+	position: relative;
+	box-shadow: 1px 2px 20px 2px #0002;
+}
+
+.form-box > h1 {
+	position: relative;
+	text-align: center;
+	margin-top: 80px;
+	margin-bottom: 50px;
+	color: #333030;	
+	font-size: 26px;
+	text-shadow: 3px 3px 4px #0002;
+}
+
+.input-group {
+	width: 450px;
+	height: 50px;
+	margin: 0 auto;
+	margin-top: 20px;
+	position: relative;
+	display: flex;
+	align-items: center;
+}
+
+.input-group > input {
+	width: 100%;
+	outline: none;
+	height: 100%;
+	position: relative;
+	border: 1px solid #f0f0f0;
+	box-shadow: 1px 1px 2px 0px #0001;
+	border-radius: 6px;
+	font-size: 14px;
+	padding-left: 20px;
+	padding-right: 40px;
+	color: #333030;
+}
+
+.input-group > input::placeholder {
+	color: #d5d5d5;
+}
+
+.input-group > label {
+	position: absolute;
+	right: 18px;
+	color: #d5d5d5;
+	font-size: 17px;
+}
+
+.agree-box {
+	position: relative;
+	width: 450px;
+	margin: 0 auto;
+	margin-top: 19px;
+	display: flex;
+}
+
+#join_agree {
+	display: none;
+}
+
+.agree-box > label {
+	width: 16px;
+	display: inline-block;
+	height: 16px;
+	border: 1px solid #ddd;
+	border-radius: 2px;
+	background-color: transparent;
+	color: #fff;
+	cursor: pointer;
+	font-size: 10px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	transition: color .3s, background-color .3s;
+}
+
+#join_agree:checked + label {
+	color: #000;
+}
+
+.agree-box > label:not(:checked):hover{
+	background-color: #f4f5f9;	
+	color: #f4f5f9;
+}
+
+.agree-box > span {
+	color: #aaa;
+	margin-left: 10px;
+	font-size: 12px;
+	font-weight: bolder;
+}
+
+
+.agree-bold {
+	font-weight: bolder;
+	text-decoration: underline;
+	cursor: pointer;
+}
+
+#join-btn {
+	width: 450px;
+	display: block;
+	margin: 0 auto;
+	height: 45px;
+	background-image: linear-gradient(to right,#a0ace6,#75ebd5);
+	border-radius: 3px;
+	border: none;
+	color: #fff;
+	font-size: 14px;
+	margin-top: 40px;
+	cursor: pointer;
+	font-weight: bolder;
+}
+
+#join-btn:hover {
+	filter: brightness(103%);
+}
+
+.input-group > input:focus {
+	border: 1px solid #a0ace6;
+}
+
+p.login {
+	text-align: center;
+	color: #aaa;
+	position: absolute;
+	left: 50%;
+	font-size: 15px;
+	transform: translateX(-50%);
+	bottom: 40px;
+
+}
+
+p.login > a {
+	font-weight: bolder;
+	color: #22b8cf;
+	text-decoration: underline;
 }
 

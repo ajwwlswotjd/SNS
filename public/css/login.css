@@ -1,0 +1,122 @@
+@charset "UTF-8";
+@font-face {
+	src : url('/css/playball.ttf');
+	font-family: 'playball';
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+a {
+	text-decoration: none;
+}
+
+li {
+	list-style: none;
+}
+
+.container {
+	width: 100%;
+	height: 100vh;
+	position: relative;
+	/*background-image: linear-gradient(45deg,#a0ace6,#75ebd5);*/
+	background-image: linear-gradient(45deg,#6f83e3,#26ebc6);
+	overflow: hidden;
+}
+
+
+.circle {
+	position: absolute;
+	width: 400px;
+	height: 400px;
+	background-color: #fff3;
+	border-radius: 100%;
+}
+
+.circle1 {
+	right: 400px;
+	top: -200px;
+}
+
+.circle2 {
+	left: -60px;
+	bottom: 10px;
+}
+
+.circle3 {
+	right: -40px;
+	bottom: -60px;
+}
+
+.circle4 {
+	left: 200px;
+	top:  70px;
+}
+
+.login-box {
+	width: 600px;
+	height: 600px;
+	border: 2px solid #fff;
+	border-radius: 100%;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%,-50%);
+}
+
+.login-container {
+	width: 100%;
+	height: 100%;
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.login-container > h1 {
+	color: #fff;
+	font-size: 70px;
+	font-weight: lighter;
+	font-family: 'playball';
+	margin-top: 50px;
+}
+
+.login-container > h2 {
+	color: #fff;
+	margin-top: 3px;
+	font-size: 23px;
+}
+
+.login-container > h2 > span {
+	font-weight: lighter;
+	font-size: 18px;
+}
+
+.login_form {
+	position: relative;
+	width: 350px;
+	margin: 0 auto;
+	margin-top: 40px;
+	height: 100px;
+}
+
+.login_form > input {
+	width: 100%;
+	height: 60px;
+	border-radius: 50px;
+	background-color: #fff6;
+	border: none;
+	font-size: 16px;
+	outline: none;
+	padding-left: 25px;
+	color: #eee;
+}
+
+
+.login_form > input::placeholder {
+	color: #fffa;
+	font-size: 17px;
+}

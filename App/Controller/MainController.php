@@ -14,11 +14,18 @@ class MainController extends MasterController {
 
 	public function login()
 	{
-		require __ROOT . "/views/login.php";
+		echo "<script>";
+		echo "location.href='/login'";
+		echo "</script>";
 	}
 
 	public function join()
 	{
 		require __ROOT . "/views/register.php";		
+	}
+
+	public function loginPage()
+	{
+		require __ROOT . "/views/login.php";		
 	}
 }
