@@ -19,6 +19,11 @@ class MainController extends MasterController {
 		echo "</script>";
 	}
 
+	public function form()
+	{
+		$this->render("form");
+	}
+
 	public function join()
 	{
 		require __ROOT . "/views/register.php";		
@@ -27,5 +32,15 @@ class MainController extends MasterController {
 	public function loginPage()
 	{
 		require __ROOT . "/views/login.php";		
+	}
+
+	public function test()
+	{
+		require __ROOT . "/views/test.php";
+	}
+
+	public function testPost()
+	{
+		echo htmlentities($_POST['textTest']);
 	}
 }

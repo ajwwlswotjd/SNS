@@ -1,4 +1,5 @@
 @charset "UTF-8";
+@import "/css/fa/css/all.min.css";
 @font-face {
 	src : url('/css/playball.ttf');
 	font-family: 'playball';
@@ -81,12 +82,12 @@ li {
 	font-size: 70px;
 	font-weight: lighter;
 	font-family: 'playball';
-	margin-top: 50px;
+	margin-top: 80px;
 }
 
 .login-container > h2 {
 	color: #fff;
-	margin-top: 3px;
+	margin-top: 30px;
 	font-size: 23px;
 }
 
@@ -100,7 +101,6 @@ li {
 	width: 350px;
 	margin: 0 auto;
 	margin-top: 40px;
-	height: 100px;
 }
 
 .login_form > input {
@@ -113,10 +113,60 @@ li {
 	outline: none;
 	padding-left: 25px;
 	color: #eee;
+	margin-bottom: 20px;
 }
 
 
 .login_form > input::placeholder {
 	color: #fffa;
 	font-size: 17px;
+}
+
+
+.adt_fx {
+	display: flex;
+	width: 100%;
+	position: relative;
+	display: flex;
+	justify-content: space-between;
+}
+
+.adt_fx > a {
+	font-size: 13px;
+	color: #fffa;
+	margin-left: 10px;
+	margin-top: 25px;
+}
+
+.adt_fx > a:hover {
+	text-decoration: underline;
+}
+
+.adt_fx > button {
+	width: 100px;
+	height: 50px;
+	border: none;
+	background-color: #fff6;
+	font-size: 50px;
+	color: #fff;
+	border-radius: 50px;
+	cursor: pointer;
+}
+
+.adt_fx > button:hover {
+	background-color: #fff7;
+}
+
+.join_link {
+	display: block;
+	text-align: center;
+	color: #fff;
+	font-size: 13px;
+	margin-top: 15px;
+}
+
+.join_link > a {
+	color: #fff;
+	text-decoration: underline;
+	cursor: pointer;
 }

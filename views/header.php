@@ -24,16 +24,20 @@
 			<div class="user-box">
 				<div class="user-container">
 					<div class="user-info">
-						<img src="/imgs/vkeod1.jpg" alt="" class="user-img">
-						<!-- <i class="user-img far fa-user-circle"></i> -->
+						<?php $profile = $_SESSION['user']->profile  ?>
+						<?php if(trim($profile)!="") : ?>
+							<img src="$profile" alt="<?= $_SESSION['user']->id ?>의 프로필">
+						<?php else : ?>
+							<i class="far fa-user-circle"></i>
+						<?php endif; ?>
 
 						<div class="user-text">
 							<span class="username">
-								정재성인척하는정재성인척하는정재성
+								<?= htmlentities($_SESSION['user']->name) ?>
 							</span>
 
 							<span class="usernick">
-								다른모든눈송이와아주비슷하게생긴단하나의눈송이
+								<?= trim($_SESSION['user']->nick) == "" ? "프로필 설정에서 별명을 작성해주세요." : htmlentities($_SESSION['user']->nick) ?>
 							</span>
 						</div>
 					</div>
@@ -58,10 +62,10 @@
 
 					<ul>
 						<li class="active">
-							<a href="/">TEST</a>
+							<a href="/">HOME</a>
 						</li>
 						<li>
-							<a href="/">TEST2</a>
+							<a href="/">FORM</a>
 						</li>
 					</ul>
 				</div>
@@ -132,12 +136,6 @@
 				</div>
 			</div>
 		</nav>
-
-		<section id="main">
-			<div id="main-container">
-				
-			</div>
-		</section>
 
 		<script>
 			$("nav > .tab1 > .tab2 > ul > li").on("click",(e)=> e.target.querySelector("a").click());

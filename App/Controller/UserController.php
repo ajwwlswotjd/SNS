@@ -18,4 +18,21 @@ class UserController extends MasterController {
 		echo json_encode(['success' => $result],JSON_UNESCAPED_UNICODE);
 	}
 
+	public function loginProcess()
+	{
+		$email = $_POST['email'];
+		$pwd = $_POST['pwd'];
+		$sql = "SELECT * FROM `sns_user` WHERE `email` = ? AND `password` = PASSWORD(?)";
+		$user = DB::fetch($sql,[$email,$pwd]);
+		if($user)
+		{
+			echo json_encode(['success' => true, 'name' => $user->name],JSON_UNESCAPED_UNICODE);
+			$_SESSION['user'] = $user;
+		}
+		else
+		{
+			echo json_encode(['success' => false],JSON_UNESCAPED_UNICODE);
+		}
+	}
+
 }
