@@ -9,6 +9,7 @@ Route::get("form","MainController@form");
 
 Route::post("user/join","UserController@registerProcess");
 Route::post("user/login","UserController@loginProcess");
+Route::post("board/write","BoardController@formProcess");
 
 
 Route::get("test","MainController@test");

@@ -61,11 +61,11 @@
 					</div>
 
 					<ul>
-						<li class="active">
+						<li>
 							<a href="/">HOME</a>
 						</li>
 						<li>
-							<a href="/">FORM</a>
+							<a href="/form">FORM</a>
 						</li>
 					</ul>
 				</div>
