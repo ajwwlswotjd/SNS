@@ -5,7 +5,7 @@
 			<div class="form-form-title">글쓰기</div>
 			<div class="form-button-box">
 				<button class="bld" data-property="bold">B</button>
-				<button class="it" data-property="Italic">I</button>
+				<button class="it" data-property="Italic">T</button>
 				<button class="udl" data-property="Underline">U</button>
 				<button class="strk" data-property="StrikeThrough">S</button>
 				<button class="jstfl" data-property="justifyleft">
@@ -18,8 +18,135 @@
 					<i class="fas fa-align-right"></i>
 				</button>
 			</div>
-			<div class="editorDiv" contenteditable="true" placeholder="새로운 소식을 남겨보세요."></div>
+			<div class="editorDiv" contenteditable="true" placeholder="새로운 소식을 남겨보세요." spellcheck="false"></div>
 			<div class="form-image-box">
+
+
+				<div class="form-image-item-box">
+					<img src="/imgs/vkeod1.jpg" alt="">
+					<div class="form-image-item-close">&times;</div>
+				</div>
+				<div class="form-image-item-box">
+					<img src="/imgs/vkeod1.jpg" alt="">
+					<div class="form-image-item-close">&times;</div>
+				</div>
+				<div class="form-image-item-box">
+					<img src="/imgs/vkeod1.jpg" alt="">
+					<div class="form-image-item-close">&times;</div>
+				</div>
+				<div class="form-image-item-box">
+					<img src="/imgs/vkeod1.jpg" alt="">
+					<div class="form-image-item-close">&times;</div>
+				</div>
+				<div class="form-image-item-box">
+					<img src="/imgs/vkeod1.jpg" alt="">
+					<div class="form-image-item-close">&times;</div>
+				</div>
+				<div class="form-image-item-box">
+					<img src="/imgs/vkeod1.jpg" alt="">
+					<div class="form-image-item-close">&times;</div>
+				</div>
+				<div class="form-image-item-box">
+					<img src="/imgs/vkeod1.jpg" alt="">
+					<div class="form-image-item-close">&times;</div>
+				</div>
+				<div class="form-image-item-box">
+					<img src="/imgs/vkeod1.jpg" alt="">
+					<div class="form-image-item-close">&times;</div>
+				</div>
+				<div class="form-image-item-box">
+					<img src="/imgs/vkeod1.jpg" alt="">
+					<div class="form-image-item-close">&times;</div>
+				</div>
+				<div class="form-image-item-box">
+					<img src="/imgs/vkeod1.jpg" alt="">
+					<div class="form-image-item-close">&times;</div>
+				</div>
+				<div class="form-image-item-box">
+					<img src="/imgs/vkeod1.jpg" alt="">
+					<div class="form-image-item-close">&times;</div>
+				</div>
+				<div class="form-image-item-box">
+					<img src="/imgs/vkeod1.jpg" alt="">
+					<div class="form-image-item-close">&times;</div>
+				</div>
+				<div class="form-image-item-box">
+					<img src="/imgs/vkeod1.jpg" alt="">
+					<div class="form-image-item-close">&times;</div>
+				</div>
+				<div class="form-image-item-box">
+					<img src="/imgs/vkeod1.jpg" alt="">
+					<div class="form-image-item-close">&times;</div>
+				</div>
+				<div class="form-image-item-box">
+					<img src="/imgs/vkeod1.jpg" alt="">
+					<div class="form-image-item-close">&times;</div>
+				</div>
+				<div class="form-image-item-box">
+					<img src="/imgs/vkeod1.jpg" alt="">
+					<div class="form-image-item-close">&times;</div>
+				</div>
+				<div class="form-image-item-box">
+					<img src="/imgs/vkeod1.jpg" alt="">
+					<div class="form-image-item-close">&times;</div>
+				</div>
+				<div class="form-image-item-box">
+					<img src="/imgs/vkeod1.jpg" alt="">
+					<div class="form-image-item-close">&times;</div>
+				</div>
+				<div class="form-image-item-box">
+					<img src="/imgs/vkeod1.jpg" alt="">
+					<div class="form-image-item-close">&times;</div>
+				</div>
+				<div class="form-image-item-box">
+					<img src="/imgs/vkeod1.jpg" alt="">
+					<div class="form-image-item-close">&times;</div>
+				</div>
+				<div class="form-image-item-box">
+					<img src="/imgs/vkeod1.jpg" alt="">
+					<div class="form-image-item-close">&times;</div>
+				</div>
+				<div class="form-image-item-box">
+					<img src="/imgs/vkeod1.jpg" alt="">
+					<div class="form-image-item-close">&times;</div>
+				</div>
+				<div class="form-image-item-box">
+					<img src="/imgs/vkeod1.jpg" alt="">
+					<div class="form-image-item-close">&times;</div>
+				</div>
+				<div class="form-image-item-box">
+					<img src="/imgs/vkeod1.jpg" alt="">
+					<div class="form-image-item-close">&times;</div>
+				</div>
+				<div class="form-image-item-box">
+					<img src="/imgs/vkeod1.jpg" alt="">
+					<div class="form-image-item-close">&times;</div>
+				</div>
+				<div class="form-image-item-box">
+					<img src="/imgs/vkeod1.jpg" alt="">
+					<div class="form-image-item-close">&times;</div>
+				</div>
+				<div class="form-image-item-box">
+					<img src="/imgs/vkeod1.jpg" alt="">
+					<div class="form-image-item-close">&times;</div>
+				</div>
+				<div class="form-image-item-box">
+					<img src="/imgs/vkeod1.jpg" alt="">
+					<div class="form-image-item-close">&times;</div>
+				</div>
+				<div class="form-image-item-box">
+					<img src="/imgs/vkeod1.jpg" alt="">
+					<div class="form-image-item-close">&times;</div>
+				</div>
+				<div class="form-image-item-box">
+					<img src="/imgs/vkeod1.jpg" alt="">
+					<div class="form-image-item-close">&times;</div>
+				</div>
+				<div class="form-image-item-box">
+					<img src="/imgs/vkeod1.jpg" alt="">
+					<div class="form-image-item-close">&times;</div>
+				</div>
+
 				<button id="form-image-add">
 					<i class="fas fa-plus"></i>
 				</button>
