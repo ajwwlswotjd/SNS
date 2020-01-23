@@ -1,4 +1,4 @@
-class App {.,
+class App {
 
 	constructor(){
 		this.boldStatus = false;
