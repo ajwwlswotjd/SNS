@@ -463,14 +463,14 @@ header > .user-box > .user-container > .user-info > .user-text {
 	background: none;
 	font-weight: bolder;
 	color: #777;
-	font-size: 17px;
+	font-size: 18px;
 	cursor: pointer;
 	margin-left: 17px;
 	outline: none;
 }
 
 .form-button-box > button:hover {
-	color: #222;
+	color: #222 !important;
 }
 
 [contenteditable=true]:empty:before {
@@ -591,3 +591,10 @@ header > .user-box > .user-container > .user-info > .user-text {
 .udl {text-decoration: underline;}
 .strk {text-decoration: line-through;}
 
+#color_input, #bgc_input {
+	display: none;
+}
+
+#form_file {
+	display: none;
+}
