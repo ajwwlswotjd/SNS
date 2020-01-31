@@ -30,11 +30,6 @@
 			</div>
 			<div class="editorDiv" contenteditable="true" placeholder="새로운 소식을 남겨보세요." spellcheck="false"></div>
 			<div class="form-image-box">
-				
-				<div class="form-image-item-box">
-					<img src="/imgs/vkeod1.jpg" alt="">
-					<div class="form-image-item-close">&times;</div>
-				</div>
 
 				<button type="button" id="form-image-add">
 					<i class="fas fa-plus"></i>

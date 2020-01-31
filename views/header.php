@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
+	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
 	<script src="/js/jquery.js"></script>
 	<link rel="stylesheet" href="/css/main.css">
 	<meta charset="UTF-8">

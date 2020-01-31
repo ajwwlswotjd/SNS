@@ -487,6 +487,7 @@ header > .user-box > .user-container > .user-info > .user-text {
 	width: 560px;
 	margin: 10px auto;
 	min-height: 80px;
+	position: relative;
 	max-height: 250px;
 	overflow-y: auto;
 	display: grid;
@@ -497,7 +498,7 @@ header > .user-box > .user-container > .user-info > .user-text {
 }
 
 .form-image-box > .form-image-item-box:hover {
-	bottom: 5px;
+	bottom: 3px;
 }
 
 .form-image-box > .form-image-item-box:hover > .form-image-item-close {
@@ -533,23 +534,31 @@ header > .user-box > .user-container > .user-info > .user-text {
 	box-sizing: content-box;
 }
 
+.form-image-item-box > span {
+	color: #000;
+	position: absolute;
+	font-size: 10px;
+	left: 50%;
+	transform: translateX(-50%);
+}
+
 .form-image-box > .form-image-item-box > img {
 	width: 100%;
 	height: 100%;
-	object-fit: cover;
+	object-fit: contain;
 }
 
 .form-image-box > #form-image-add:hover {
-	bottom: 5px;
+	 background-color: #ddda;
 }
 
 .form-image-box > #form-image-add {
 	width: 80px;
 	height: 80px;
 	background: #eee;
+	transition: background .3s;
 	bottom: 0;
 	position: relative;
-	transition: bottom .3s;
 	border-radius: 5px;
 	border: none;
 	color: #222;
@@ -567,7 +576,7 @@ header > .user-box > .user-container > .user-info > .user-text {
 
 .form-bottom > .form-submit {
 	width: 100px;
-	margin-right: 20px;
+	margin-right: 10px;
 	height: 40px;
 	background-color: #474e60;
 	color: #fff;
@@ -597,4 +606,30 @@ header > .user-box > .user-container > .user-info > .user-text {
 
 #form_file {
 	display: none;
+}
+
+.form-image-item-box > i {
+	width: 100%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	font-size: 30px;
+	color: #333030;
+}
+
+.form-image-item-box > span {
+
+}
+
+.form-image-box-dark {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	background-color: #639fff2e;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	display: none;
+	color: #222d;
 }
