@@ -38,6 +38,6 @@
 			<div class="form-bottom">
 				<button type="submit" class="form-submit">게시</button>
 			</div>
-		</div>
+		</div>		
 	</div>
 </section>

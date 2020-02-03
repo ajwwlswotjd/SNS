@@ -51,7 +51,7 @@ class App {
 					if(type=="image"){ // 타입이 이미지임
 						let reader = new FileReader();
 						reader.addEventListener("load",(e)=>{ // base64 완료
-							let div = this.getImgPreviewTemp(f.name,reader.result,f);
+							let div = this.getImgPreviewTemp(f.name,reader.result);
 							document.querySelector(".form-image-box").prepend(div);
 							this.fileList.push(f);
 						},false);
@@ -75,7 +75,7 @@ class App {
 				if(type=="image"){
 					let reader = new FileReader();
 					reader.addEventListener("load",(e)=>{ // base64 완료
-						let div = this.getImgPreviewTemp(f.name,reader.result,f);
+						let div = this.getImgPreviewTemp(f.name,reader.result);
 						document.querySelector(".form-image-box").prepend(div);
 						this.fileList.push(f);
 					},false);
@@ -91,33 +91,46 @@ class App {
 				Swal.fire('글을 작성해주세요.',"입력칸이 비었습니다. 당신의 새로운 소식을 전해주세요!",'warning');
 				return;
 			}
-
+			let fileList = [];
 			if(this.fileList.length > 0){
 
 				this.fileList.forEach(f=>{
-
 					let formData = new FormData();
 					formData.append("file",f);
-					log(f);
-					
+					let ext = f.name.substring(f.name.lastIndexOf("."),f.name.length).toLowerCase();
+					let fileName = ""+f.lastModified+f.size+ext;
+					formData.append("name",fileName);
+					fileList.push(fileName);
 					let xhr = new XMLHttpRequest();
-					xhr.open("POST","/board/upload");
-					xhr.addEventListener("load",(e)=>{
-						let json = JSON.parse(xhr.responseText);
-						// log(json);
-					});
-					xhr.addEventListener("progress",(e)=>{
-						// log(e.loaded/e.total)*100;
-					});
+					xhr.open("POST","/board/upload/img");
 					xhr.send(formData);
 
 				});
 
 			}
+
+			let formData = new FormData();
+			formData.append("value",value);
+			formData.append("fileList",fileList);
+			let xhr = new XMLHttpRequest();
+			xhr.open("POST","/board/upload/text");
+			xhr.addEventListener("load",(e)=>{
+				let json = JSON.parse(xhr.responseText);
+				if(json.success){
+					Swal.fire("완료","당신의 소식을 친구들에게 잘 전하였습니다.","success").then(e=>{
+						location.href = "/";
+					});
+				}else {
+					Swal.fire("실패","알수없는 오류로 인해 글 작성에 실패하였습니다.","error").then(e=>{
+						location.reload();
+					});
+				}
+			});
+			xhr.send(formData);
 		});
 	}
 
-	getImgPreviewTemp(name,src,file){
+	getImgPreviewTemp(name,src){
 		let div = document.createElement("div");
 		div.classList.add("form-image-item-box");
 		div.setAttribute("title",name);
@@ -127,7 +140,7 @@ class App {
 		`;
 		div.querySelector(".form-image-item-close").addEventListener("click",(e)=>{
 			$(div).remove();
-			let fIdx = this.fileList.findIndex(f=> f.name==file.name);
+			let fIdx = this.fileList.findIndex(f=> f.name==name);
 			this.fileList.splice(fIdx,1);
 		});
 		return div;
