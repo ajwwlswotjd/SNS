@@ -90,6 +90,9 @@
 
 					<div class="news-img-box">
 						<img src="/imgs/vkeod_bg.png" alt="">
+						<img src="/imgs/vkeod1.jpg" alt="">
+						<img src="/imgs/vkeod_bg.png" alt="">
+						<img src="/imgs/vkeod1.jpg" alt="">
 					</div>
 
 					<div class="news-bottom">
