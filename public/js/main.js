@@ -40,10 +40,12 @@ class App {
 			if(Math.floor(scrollBottom <= 0)){
 				if(this.loadingData) return;
 				this.loadingData = true;
-				$.ajax({
 
-				});
 			}
+		});
+
+		$(document).on("click",".news-bottom-comment",(e)=>{
+			e.target.parentNode.parentNode.querySelector(".news-comment-box").style.display = "inline-block";
 		});
 	}
 
