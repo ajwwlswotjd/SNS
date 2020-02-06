@@ -372,6 +372,13 @@ header > .user-box > .user-container > .user-info > .user-text {
 	font-size: 40px;
 }
 
+.user-info > img {
+	width: 40px;
+	height: 40px;
+	border: 1px solid #ddd;
+	border-radius: 100%;
+}
+
 .main_box > .form_part > .part-form-btn {
 	margin: 17px;
 	height: 38px;
@@ -643,7 +650,7 @@ header > .user-box > .user-container > .user-info > .user-text {
 	position: relative;	
 	height: auto;
 	background-color: #fff;
-	margin-top: 15px;
+	margin-top: 20px;
 }
 
 .news-container > .news-top {
@@ -790,10 +797,10 @@ header > .user-box > .user-container > .user-info > .user-text {
 	background-color: #fff;
 	box-shadow: 1px 1px 4px 2px #00000005;
 	margin-top: 30px;
-	margin-bottom: 40px;
 	cursor: pointer;
 	position: relative;
 	bottom: 0;
+	display: none;
 }
 
 .last-part:hover {
@@ -1011,4 +1018,34 @@ header > .user-box > .user-container > .user-info > .user-text {
 }
 .news-img-box > span:hover {
 	text-decoration: underline;
+}
+
+.padding-bottom {
+	width: 100%;
+	height: 50px;
+	position: relative;
+}
+
+#spinner {
+	position: fixed;
+	top: 50%;
+	transform: translate(-50%,-50%);
+	left: 50%;
+	z-index: 100;
+	font-size: 50px;
+	color: #aaa;
+	animation-name: spin;
+	display: none;
+	animation-duration: 1s;
+	animation-iteration-count: infinite;
+}
+
+@keyframes spin {
+	from {
+		transform: rotate(0deg);
+	}
+
+	to {
+		transform: rotate(360deg);		
+	}
 }

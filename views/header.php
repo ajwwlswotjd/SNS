@@ -27,7 +27,7 @@
 					<div class="user-info">
 						<?php $profile = $_SESSION['user']->profile  ?>
 						<?php if(trim($profile)!="") : ?>
-							<img src="$profile" alt="<?= $_SESSION['user']->id ?>의 프로필">
+							<img src="<?= $profile ?>" alt="<?= $_SESSION['user']->id ?>의 프로필">
 						<?php else : ?>
 							<i class="far fa-user-circle"></i>
 						<?php endif; ?>

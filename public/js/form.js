@@ -91,27 +91,9 @@ class App {
 				Swal.fire('글을 작성해주세요.',"입력칸이 비었습니다. 당신의 새로운 소식을 전해주세요!",'warning');
 				return;
 			}
-			let fileList = [];
-			if(this.fileList.length > 0){
-
-				this.fileList.forEach(f=>{
-					let formData = new FormData();
-					formData.append("file",f);
-					let ext = f.name.substring(f.name.lastIndexOf("."),f.name.length).toLowerCase();
-					let fileName = ""+f.lastModified+f.size+ext;
-					formData.append("name",fileName);
-					fileList.push(fileName);
-					let xhr = new XMLHttpRequest();
-					xhr.open("POST","/board/upload/img");
-					xhr.send(formData);
-
-				});
-
-			}
-
+			let idx;
 			let formData = new FormData();
 			formData.append("value",value);
-			formData.append("fileList",fileList);
 			let xhr = new XMLHttpRequest();
 			xhr.open("POST","/board/upload/text");
 			xhr.addEventListener("load",(e)=>{
@@ -125,8 +107,28 @@ class App {
 						location.reload();
 					});
 				}
+				idx = json.idx;
+				if(this.fileList.length > 0){
+
+					this.fileList.forEach(f=>{
+						let formData = new FormData();
+						formData.append("file",f);
+						formData.append("idx",idx);
+						let ext = f.name.substring(f.name.lastIndexOf("."),f.name.length).toLowerCase();
+						let fileName = ""+f.lastModified+f.size+ext;
+						formData.append("name",fileName);
+						let xhr = new XMLHttpRequest();
+						xhr.open("POST","/board/upload/img");
+						xhr.addEventListener("load",(e)=>{
+							// log(xhr.responseText);
+						});
+						xhr.send(formData);
+					});
+				}
 			});
 			xhr.send(formData);
+
+
 		});
 	}
 
