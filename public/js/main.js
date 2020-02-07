@@ -8,6 +8,7 @@ class App {
 		this.init();
 		this.loadingData = false;
 		this.showCnt = 0;
+		this.bringData(0,5);
 	}
 
 
@@ -42,7 +43,7 @@ class App {
 			let windowHeight = $(window).height()-95;
 			let documentHeight = $(".main_box").height();
 			let scrollBottom = documentHeight-scrollTop-windowHeight;
-			if(Math.floor(scrollBottom <= 0)){
+			if(Math.floor(scrollBottom) <= 0){
 				if(this.loadingData) return;
 				this.loadingData = true;
 				$("#spinner").fadeIn();
@@ -51,7 +52,7 @@ class App {
 					let div = this.getForm(10);
 					document.querySelector(".news-part-container").appendChild(div);
 					this.loadingData = false;
-				},1500);
+				},1000);
 			}
 		});
 
@@ -70,7 +71,9 @@ class App {
 			url : "/board/load",
 			method : "POST",
 			success : function(e){
-				
+				// log(e);
+				let json = JSON.parse(e);
+				log(json);
 			}
 		});
 	}
