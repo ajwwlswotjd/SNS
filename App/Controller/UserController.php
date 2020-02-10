@@ -35,4 +35,12 @@ class UserController extends MasterController {
 		}
 	}
 
+	public function userFind()
+	{
+		$id = $_POST['userId'];
+		$sql = "SELECT * FROM `sns_user` WHERE `id` = ?";
+		$user = DB::fetch($sql,[$id]);
+		echo json_encode(["user"=>$user],JSON_UNESCAPED_UNICODE);
+	}
+
 }

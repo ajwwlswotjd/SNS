@@ -29,12 +29,33 @@ class BoardController extends MasterController {
 		echo json_encode(["success"=>$result,"idx"=>$idx],JSON_UNESCAPED_UNICODE);
 	}
 
+	public function loadCnt()
+	{
+		$sql = "SELECT count(*) as cnt FROM `sns_board` ORDER BY `date` DESC";
+		$cnt = DB::fetch($sql,[])->cnt;
+		echo json_encode(["cnt"=>$cnt],JSON_UNESCAPED_UNICODE);
+	}
+
+	public function commentProcess()
+	{
+		$sql = "INSERT INTO `sns_comment`(`id`, `content`, `user_idx`, `board_idx`, `date`) VALUES (null, ?,?,?,?)";
+		$content = $_POST['content'];
+		$board = $_POST['board'];
+		$userId = $_SESSION['user']->id;
+		$today = date("Y:m:d:H:i:s");
+		$result = DB::query($sql,[$content,$userId,$board,$today]);
+		echo json_encode(["result"=>$result],JSON_UNESCAPED_UNICODE);
+	}
+
+	public function commentLoad()
+	{
+		
+	}
+
 	public function loadProcess()
 	{
 		$start = $_POST['start'];
 		$count = $_POST['cnt'];
-		$sql = "SELECT COUNT(*) as cnt FROM `sns_board`";
-		$cnt = DB::fetch($sql,[])->cnt;
 		$sql = "SELECT * FROM `sns_board` ORDER BY `date` DESC LIMIT $start, $count";
 		$result = DB::fetchAll($sql,[]);
 		$list = array();
@@ -58,7 +79,7 @@ class BoardController extends MasterController {
 
 			array_push($list, ["imgs"=>$imgs, "comments"=>$comments, "user"=>$user,"host"=>$_SESSION['user']->id === $item->writer, "board"=>$item, "likeList"=> $likeList, "like"=>$like]);
 		}
-		echo json_encode(["list"=>$list,"cnt"=>$cnt,"success"=>true],JSON_UNESCAPED_UNICODE);
+		echo json_encode(["list"=>$list,"success"=>true, "nowIndex"=>$start+$count],JSON_UNESCAPED_UNICODE);
 	}
 
 }

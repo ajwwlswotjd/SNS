@@ -87,6 +87,25 @@
 										</div>
 									</div>
 								</div>
+								<div class="news-comment">
+									<div class="news-comment-img"> 
+										<img src="/imgs/user.png" alt="">
+									</div>	
+
+									<div class="news-comment-text">
+										<div class="news-comment-name">
+											정재성인척하는정재성
+										</div>
+
+										<div class="news-comment-content">
+											가나다라마바사아자카타파하가나다라마바사아자카타파하가나다라마바사
+										</div>
+
+										<div class="news-comment-date">
+											2019년 1월 31일 오후 11:12
+										</div>
+									</div>
+								</div>
 							</div>
 
 							<div class="news-comment-form">
@@ -94,7 +113,7 @@
 								<div class="news-comment-form-img">
 									<img src="/imgs/user.png" alt="">
 								</div>
-								<button type="submit">보내기</button>
+								<button type="submit" data-board="27">보내기</button>
 							</div>
 						</div>
 

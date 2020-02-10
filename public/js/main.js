@@ -7,14 +7,14 @@ class App {
 	constructor(){
 		this.init();
 		this.loadingData = false;
-		this.showCnt = 0;
-		this.bringData(0,5);
+		this.nowIndex = 0;
+		this.showCnt = 5;
+		this.totalCnt = 0;
+		this.bringData();
 	}
 
 
-	init(){
-
-
+	async init(){
 
 
 		document.querySelector(".form_part").addEventListener("click",(e)=> location.href = "/form");
@@ -37,43 +37,84 @@ class App {
 		document.querySelector(".last-part").addEventListener("click",(e)=>{
 			$("#main").animate({scrollTop : 0},300);
 		});
+
 		const main = document.querySelector("#main");
+
 		main.addEventListener("scroll",(e)=>{
 			let scrollTop = $(main).scrollTop();
 			let windowHeight = $(window).height()-95;
 			let documentHeight = $(".main_box").height();
 			let scrollBottom = documentHeight-scrollTop-windowHeight;
 			if(Math.floor(scrollBottom) <= 0){
-				if(this.loadingData) return;
-				this.loadingData = true;
-				$("#spinner").fadeIn();
-				setTimeout((e)=>{
-					$("#spinner").fadeOut();
-					let div = this.getForm(10);
-					document.querySelector(".news-part-container").appendChild(div);
-					this.loadingData = false;
-				},1000);
+				this.bringData();
 			}
 		});
 
-		$(document).on("click",".news-bottom-comment",(e)=>{
-			e.target.parentNode.parentNode.querySelector(".news-comment-box").style.display = "inline-block";
+		$(document).on("click",".news-bottom-comment",function(e){
+			this.parentNode.parentNode.querySelector(".news-comment-box").style.display = "inline-block";
+		});
+
+		$(document).on("click",".news-attr-right",function(e){
+			this.parentNode.parentNode.querySelector(".news-comment-box").style.display = 'inline-block';
+		});
+
+		$(document).on("click",".news-comment-form > button", function(e){
+			let value = this.parentNode.querySelector("input").value;
+			if($.trim(value)=="") {
+				Swal.fire('댓글을 작성해주세요.',"입력칸이 비었습니다!",'warning');
+				return;
+			}
+
+			let data = {};
+			data.content = value;
+			data.board = this.dataset.board;
+			$.ajax({
+				data:data,
+				url:"/board/comment",
+				method:"POST",
+				success : (e)=>{
+					log(e);
+				}
+			});
 		});
 	}
 
+	bringData(){
 
-	bringData(start,cnt){
+		if(this.loadingData) return;
+		this.loadingData = true;
 		let data = {};
-		data.start = start;
-		data.cnt = cnt;
+		data.start = this.nowIndex;
+		let data1 = {};
 		$.ajax({
-			data : data,
-			url : "/board/load",
-			method : "POST",
-			success : function(e){
-				// log(e);
+			data: data1,
+			url:"/board/cnt",
+			method: "POST",
+			success : (e)=>{
 				let json = JSON.parse(e);
-				log(json);
+				this.totalCnt = json.cnt;
+				if(this.totalCnt == this.nowIndex) return;
+				$("#spinner").fadeIn();
+				$(".last-part").fadeOut();
+				data.cnt = this.showCnt+this.nowIndex > this.totalCnt ? this.totalCnt - this.nowIndex : this.showCnt;
+				$.ajax({
+					data : data,
+					url : "/board/load",
+					method : "POST",
+					success : (e)=>{
+						let json = JSON.parse(e);
+						setTimeout((e)=>{
+							$("#spinner").fadeOut();
+							this.loadingData = false;
+							this.nowIndex = json.nowIndex;
+							if(this.nowIndex == this.totalCnt) $(".last-part").fadeIn();
+							json.list.forEach(x=>{
+								let div = this.getForm(x);
+								document.querySelector(".news-part-container").appendChild(div);
+							});
+						},10);
+					}
+				});
 			}
 		});
 	}
@@ -81,108 +122,120 @@ class App {
 	getForm(data){
 		let div = document.createElement("div");
 		div.classList.add("news_part");
-		div.innerHTML = 
-				`
-				<div class="news-container">
-					<div class="news-top">
+		div.innerHTML = `
+			<div class="news-container">
+						<div class="news-top">
 
-						<div class="news-top-icon">
-							<img src="/imgs/user.png" alt="">
-							<!-- <i class="fas fa-user-circle"></i> -->
+							<div class="news-top-icon">
+								<img src="${data.user.profile}" alt="">
+							</div>
+
+							<div class="news-top-info">
+								<span class="news-top-info-name">
+									${data.user.name}
+								</span>
+								<span class="news-top-info-date">
+									${this.dateToString(data.board.date)}
+								</span>
+							</div>
+							
+							<div class="news-top-right">
+								${data.host ? `<i class="fas fa-ellipsis-v"></i>` : ""}
+							</div>
 						</div>
-						
-						<div class="news-top-info">
-							<span class="news-top-info-name">
-								정재성인척하는정재성
-							</span>
-							<span class="news-top-info-date">
-								2020년 2월 1일 오후 11:12						
-							</span>
+
+						<div class="news-content">
+							${data.board.content}
 						</div>
 
-						<div class="news-top-right">
-							<i class="fas fa-ellipsis-v"></i>
+						<div class="news-img-box">
+							${ data.imgs.length > 0 ? `<img src="${data.imgs[0].src}" alt="">` : "" }
+							${ data.imgs.length > 1 ? `<span>이외의 10가지 이미지 더 보기</span>` : ""}
 						</div>
-					</div>
 
-					<div class="news-content">
-						<div style="text-align: left;">fewfewfew</div><div style="text-align: left;">fewlfewpflewp[flewp[flewp[fwel[pfew</div><div style="text-align: left;"><span style="background-color: rgb(0, 0, 0);"><font color="#ffffff">l[Felw[pfewl[p</font></span></div><div style="text-align: left;"><span style="background-color: rgb(0, 0, 0);"><font color="#ffffff">fewlf[pewflew[</font></span></div><div style="text-align: left;"><span style="background-color: rgb(0, 0, 0);"><font color="#ffffff">pflewp[flewp[flewp[few</font></span></div><div style="text-align: left;"><span style="background-color: rgb(0, 0, 0);"><font color="#ffffff">fewfklew[pfkew[pfewkf[pewflew[pfelw[pfelfp[ewlfe[wfe</font></span></div><div style="text-align: left;"><span style="background-color: rgb(0, 0, 0);"><font color="#ffffff">ffewfwefewfewfe[</font></span></div><div style="text-align: left;"><span style="background-color: rgb(0, 0, 0);"><font color="#ffffff">liuliuliu</font></span></div><div style="text-align: left;"><font color="#ffffff"><span style="background-color: rgb(0, 0, 0);">r</span></font></div><div style="text-align: left;"><font color="#ffffff"><span style="background-color: rgb(0, 0, 0);">안녕하세요 가나다라마ㅏ사아자카타파하</span></font></div>
-					</div>
-
-					<div class="news-img-box">
-						<img src="/imgs/vkeod_bg.png" alt="">
-						<span>이외의 10가지 이미지 더 보기</span>
-					</div>
-
-					<div class="news-attr-box">
-						<div class="news-attr-left">
-							<i class="far fa-thumbs-up"></i>
-							<span>120</span>
+						<div class="news-attr-box">
+							<div class="news-attr-left">
+								<i class="far fa-thumbs-up"></i>
+								<span>${data.likeList.length.toLocaleString()}</span>
+							</div>
+							<div class="news-attr-right">
+								<i class="far fa-comment"></i>
+								<span>${data.comments.length.toLocaleString()}</span>
+							</div>
 						</div>
-						<div class="news-attr-right">
-							<i class="far fa-comment"></i>
-							<span>6</span>
+
+						<div class="news-bottom">
+							<button class="news-bottom-like">
+								<i class="far fa-thumbs-up ${data.like ? 'likeTrue' : 'likeFalse'}"></i>
+								<span>좋아요</span>
+							</button>
+
+							<button class="news-bottom-comment">
+								<i class="far fa-comment-dots"></i>
+								<span>댓글쓰기</span>
+							</button>
 						</div>
-					</div>
 
-					<div class="news-bottom">
-						<button class="news-bottom-like">
-							<i class="far fa-thumbs-up"></i>
-							<span>좋아요</span>
-						</button>
+						<div class="news-comment-box">
+							<div class="news-comment-container">
 
-						<button class="news-bottom-comment">
-							<i class="far fa-comment-dots"></i>
-							<span>댓글쓰기</span>
-						</button>
-					</div>
-
-					<div class="news-comment-box">
-						<div class="news-comment-container">
-							<div class="news-comment">
-								<div class="news-comment-img"> 
-									<img src="/imgs/user.png" alt="">
-								</div>	
-
-								<div class="news-comment-text">
-									<div class="news-comment-name">
-										정재성인척하는정재성
-									</div>
-
-									<div class="news-comment-content">
-										가나다라마바사아자카타파하가나다라마바사아자카타파하가나다라마바사
-									</div>
-
-									<div class="news-comment-date">
-										2019년 1월 31일 오후 11:12
-									</div>
+							</div>
+							<div class="news-comment-form">
+								<input type="text" placeholder="댓글을 남겨주세요">
+								<div class="news-comment-form-img">
+									<img src="${$("#user-info-img").attr("src")}" alt="">
 								</div>
+								<button type="submit" data-board="${data.board.id}">보내기</button>
 							</div>
 						</div>
 
-						<div class="news-comment-form">
-							<input type="text" placeholder="댓글을 남겨주세요">
-							<div class="news-comment-form-img">
-								<img src="/imgs/user.png" alt="">
-							</div>
-							<button type="submit">보내기</button>
+						<div class="news-more-box">
+							<ul class="news-more-box-container">
+								${data.host ? `<li><i class="far fa-edit"></i><span>수정</span></li>` : ""}
+								${data.host ? `<li><i class="far fa-trash-alt"></i><span>삭제</span></li>` : ""}
+							</ul>
 						</div>
 					</div>
-
-					<div class="news-more-box">
-						<ul class="news-more-box-container">
-							<li>
-								<i class="far fa-edit"></i>
-								<span>수정</span>
-							</li>
-							<li>
-								<i class="far fa-trash-alt"></i>
-								<span>삭제</span>
-							</li>
-						</ul>
-					</div>
-				</div>
-				`;
+		`;
 		return div;
+	}
+
+	dateToString(date){
+		date += "";
+		let dateArr = date.split(":");
+		let now = new Date();
+		let nowStr = ""+now.getFullYear()+this.preZero(now.getMonth()+1)+this.preZero(now.getDate())+this.preZero(now.getHours())+this.preZero(now.getMinutes())+this.preZero(now.getSeconds());
+		let dateStr = "";
+		dateArr.forEach(x=> dateStr += x);
+		let diff =  nowStr - dateStr;
+		if(diff < 0){
+			let ojh = dateArr[3] > 11 ? "오후" : "오전";
+			let hour = dateArr[3] > 12 ? dateArr[3]-12 : dateArr[3];
+			let str = dateArr[0]+"년 "+this.delZero(dateArr[1])+"월 "+this.delZero(dateArr[2])+"일 "+ojh+" "+hour+":"+dateArr[4];
+			return str;
+		}
+		else if(diff < 60) return diff+"초 전";
+		else if(diff < 3600) return Math.floor(diff/60)+"분 전";
+		else if(diff < 86400) return Math.floor(diff/3600)+"시간 전";
+		else if(diff < 604800) return Math.floor(diff/86400)+"일 전";
+		else if(diff < 2592000) return Math.floor(diff/604800)+"주 전";
+		else if(diff < 31104000) return Math.floor(diff/2592000)+"달 전";
+		else {
+			let ojh = dateArr[3] > 11 ? "오후" : "오전";
+			let hour = dateArr[3] > 12 ? dateArr[3]-12 : dateArr[3];
+			let str = dateArr[0]+"년 "+this.delZero(dateArr[1])+"월 "+this.delZero(dateArr[2])+"일 "+ojh+" "+hour+":"+dateArr[4];
+			return str;
+		}
+		
+	}
+
+	preZero(text){
+		let txt = "0"+text;
+		return txt.substring(txt.length-2,txt.length);
+	}
+
+	delZero(text){
+		let txtArr = text.split("");
+		return txtArr[0]=="0" ? text.substring(text.length-1,text.length) : text;
 	}
 }

@@ -811,17 +811,14 @@ header > .user-box > .user-container > .user-info > .user-text {
 
 @keyframes updown {
 	0% {
-		margin-bottom: 40px;
 		bottom: 0;
 	}
 
 	50% {
 		bottom: 10px;
-		margin-bottom: 50px;
 	}
 
 	100% {
-		margin-bottom: 40px;
 		bottom: 0;
 	}
 }
@@ -1048,4 +1045,11 @@ header > .user-box > .user-container > .user-info > .user-text {
 	to {
 		transform: rotate(360deg);		
 	}
+}
+
+
+.news-top-icon > img {
+	width: 40px;
+	height: 40px;
+	object-fit: cover;
 }
