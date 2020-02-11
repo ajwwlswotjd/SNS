@@ -18,6 +18,7 @@ Route::post("board/load","BoardController@loadProcess");
 Route::post("board/cnt","BoardController@loadCnt");
 Route::post("board/comment","BoardController@commentProcess");
 Route::post("board/comment/load","BoardController@commentLoad");
+Route::post("board/like","BoardController@likeProcess");
 
 
 Route::get("test","MainController@test");

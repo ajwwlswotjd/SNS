@@ -39,7 +39,7 @@ class BoardController extends MasterController {
 	public function commentProcess()
 	{
 		$sql = "INSERT INTO `sns_comment`(`id`, `content`, `user_idx`, `board_idx`, `date`) VALUES (null, ?,?,?,?)";
-		$content = $_POST['content'];
+		$content = htmlentities($_POST['content']);
 		$board = $_POST['board'];
 		$userId = $_SESSION['user']->id;
 		$today = date("Y:m:d:H:i:s");
@@ -49,7 +49,16 @@ class BoardController extends MasterController {
 
 	public function commentLoad()
 	{
-		
+		$idx = $_POST['idx'];
+		$sql = "SELECT * FROM `sns_comment` WHERE `board_idx`= ? ORDER BY `date` ASC";
+		$list = DB::fetchAll($sql,[$idx]);
+		$arr = array();
+		foreach ($list as $item) {
+			$sql = "SELECT * FROM `sns_user` WHERE `id` = ?";
+			$user = DB::fetch($sql,[$item->user_idx]);
+			array_push($arr,["user"=>$user,"comment"=>$item]);
+		}
+		echo json_encode(["list"=>$arr],JSON_UNESCAPED_UNICODE);
 	}
 
 	public function loadProcess()
@@ -65,14 +74,14 @@ class BoardController extends MasterController {
 			$sql = "SELECT * FROM `sns_imgs` WHERE `board_idx` = ? ORDER BY `id` DESC";
 			$imgs = DB::fetchAll($sql,[$item->id]);
 			// 댓글 가져오기
-			$sql = "SELECT * FROM `sns_comment` WHERE `board_idx` = ? ORDER BY `date` DESC";
-			$comments = DB::fetchAll($sql,[$item->id]);
+			$sql = "SELECT count(*) as cnt FROM `sns_comment` WHERE `board_idx` = ? ORDER BY `date` DESC";
+			$comments = DB::fetch($sql,[$item->id])->cnt;
 			// 글쓴이 정보 가져오기
 			$sql = "SELECT * FROM `sns_user` WHERE `id` = ?";
 			$user = DB::fetch($sql,[$item->writer]);
 			// 좋아요 리스트 가져오기
-			$sql = "SELECT * FROM `sns_like` WHERE `board_idx` = ?";
-			$likeList = DB::fetchAll($sql,[$item->id]);
+			$sql = "SELECT count(*) as cnt FROM `sns_like` WHERE `board_idx` = ?";
+			$likeList = DB::fetch($sql,[$item->id])->cnt;
 			// 좋아요 눌렀는지 안눌렀는지
 			$sql = "SELECT * FROM `sns_like` WHERE `board_idx`= ? AND `user_idx` = ?";
 			$like = DB::fetch($sql,[$item->id, $_SESSION['user']->id]);
@@ -82,6 +91,16 @@ class BoardController extends MasterController {
 		echo json_encode(["list"=>$list,"success"=>true, "nowIndex"=>$start+$count],JSON_UNESCAPED_UNICODE);
 	}
 
+	public function likeProcess()
+	{
+		$idx = $_POST['idx'];
+		$now = $_POST['now'];
+		$sql = $now=="true" ? "DELETE FROM `sns_like` WHERE `user_idx` = ? AND `board_idx` = ?" : "INSERT INTO `sns_like`(`id`, `user_idx`, `board_idx`) VALUES (null,?,?)";
+		$result = DB::query($sql,[$_SESSION['user']->id,$idx]);
+		$sql = "SELECT count(*) as cnt FROM `sns_like` WHERE `board_idx` = ?";
+		$cnt = DB::fetch($sql,[$idx])->cnt;
+		echo json_encode(["cnt"=>$cnt],JSON_UNESCAPED_UNICODE);
+	}
 }
 
 // 지식++;

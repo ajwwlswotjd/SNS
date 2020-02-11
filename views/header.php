@@ -44,7 +44,10 @@
 					</div>
 
 					<div class="user-menu">
-						<i class="fas fa-bars"></i>
+						<i class="fas fa-bell"></i>
+						<div class="user-menu-circle">
+							14
+						</div>
 					</div>
 				</div>
 			</div>

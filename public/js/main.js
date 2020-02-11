@@ -16,13 +16,14 @@ class App {
 
 	async init(){
 
+		let appThis = this;
 
 		document.querySelector(".form_part").addEventListener("click",(e)=> location.href = "/form");
 		$("#tab-menu > .tab2").eq(0)[0].querySelector("ul > li:first-child").classList.add("active");
 
-		document.querySelector(".news-top-right").addEventListener("click",(e)=>{
+		$(document).on('click',".news-top-right",function(e){
 			e.stopImmediatePropagation();		
-			let dom = e.target.parentNode.parentNode.parentNode.querySelector(".news-more-box");
+			let dom = this.parentNode.parentNode.parentNode.querySelector(".news-more-box");
 			dom.style.display = dom.style.display == "block" ? "none" : "block";
 		});
 
@@ -50,34 +51,101 @@ class App {
 			}
 		});
 
-		$(document).on("click",".news-bottom-comment",function(e){
-			this.parentNode.parentNode.querySelector(".news-comment-box").style.display = "inline-block";
+		$(document).on("click",".news-attr-right",function(e){
+			this.parentNode.parentNode.querySelector(".news-bottom > .news-bottom-comment").click();
 		});
 
-		$(document).on("click",".news-attr-right",function(e){
-			this.parentNode.parentNode.querySelector(".news-comment-box").style.display = 'inline-block';
+		$(document).on("click",".news-bottom-comment",function(e){
+			appThis.loadComment(this);
+		});
+
+		$(document).on('keydown',".news-comment-form > input",(e)=>{
+			if(e.keyCode == 13) e.target.parentNode.querySelector("button").click();
+		});
+
+		$(document).on("click",".news-bottom-like",function(e){
+			let data = {};
+			data.idx = this.dataset.board;
+			data.now = $(this).hasClass("likeTrue");
+			$.ajax({
+				data:data,
+				url:"/board/like",
+				method : "POST",
+				success : (e)=>{ 
+					$(this).toggleClass("likeTrue");
+					$(this).toggleClass("likeFalse");
+					$(this.querySelector("i")).toggleClass("fas");
+					$(this.querySelector("i")).toggleClass("far");
+					let json = JSON.parse(e);
+					this.parentNode.parentNode.querySelector(".news-attr-box > .news-attr-left > span").innerHTML = json.cnt;
+				}
+			});
 		});
 
 		$(document).on("click",".news-comment-form > button", function(e){
 			let value = this.parentNode.querySelector("input").value;
-			if($.trim(value)=="") {
-				Swal.fire('댓글을 작성해주세요.',"입력칸이 비었습니다!",'warning');
-				return;
+			if($.trim(value)=="") Swal.fire('댓글을 작성해주세요.',"입력칸이 비었습니다!",'error');
+			else {
+				let data = {};
+				data.content = value;
+				data.board = this.dataset.board;
+				$.ajax({
+					data:data,
+					url:"/board/comment",
+					method:"POST",
+					success : (e)=>{
+						this.parentNode.querySelector("input").value = "";
+						appThis.loadComment(this.parentNode.parentNode.parentNode.querySelector(".news-bottom > .news-bottom-comment"));
+					}
+				});
 			}
-
-			let data = {};
-			data.content = value;
-			data.board = this.dataset.board;
-			$.ajax({
-				data:data,
-				url:"/board/comment",
-				method:"POST",
-				success : (e)=>{
-					log(e);
-				}
-			});
 		});
 	}
+
+
+	loadComment(btn){
+		let board_idx = btn.dataset.board;
+		let data = {};
+		data.idx = board_idx;
+		let commentBox = btn.parentNode.parentNode.querySelector(".news-comment-box");
+		commentBox.style.display = "block";
+		$.ajax({
+			data:data,
+			url:"/board/comment/load",
+			method:"POST",
+			success: (e)=>{
+				let json  = JSON.parse(e);
+				commentBox.querySelector(".news-comment-container").innerHTML = "";
+				commentBox.parentNode.querySelector(".news-attr-box > .news-attr-right > span").innerHTML = json.list.length;
+				json.list.forEach(x=>{
+					let div = this.getCommentForm(x);
+					commentBox.querySelector(".news-comment-container").appendChild(div);
+				});	
+			}
+		});
+	}
+
+	getCommentForm(data){
+		let div = document.createElement("div");
+		div.classList.add("news-comment");
+		div.innerHTML = 
+		`<div class="news-comment-img"> 
+				<img src="${data.user.profile}" alt="">
+		</div>	
+		<div class="news-comment-text">
+			<div class="news-comment-name">
+				${data.user.name}
+			</div>
+			<div class="news-comment-content">
+				${data.comment.content}
+			</div>
+			<div class="news-comment-date">
+				${this.dateToString(data.comment.date)}
+			</div>
+		</div>`;
+		return div;
+	}
+
 
 	bringData(){
 
@@ -150,27 +218,27 @@ class App {
 
 						<div class="news-img-box">
 							${ data.imgs.length > 0 ? `<img src="${data.imgs[0].src}" alt="">` : "" }
-							${ data.imgs.length > 1 ? `<span>이외의 10가지 이미지 더 보기</span>` : ""}
+							${ data.imgs.length > 1 ? `<span>이외의 ${data.imgs.length-1}가지 이미지 더 보기</span>` : ""}
 						</div>
 
 						<div class="news-attr-box">
 							<div class="news-attr-left">
 								<i class="far fa-thumbs-up"></i>
-								<span>${data.likeList.length.toLocaleString()}</span>
+								<span>${data.likeList.toLocaleString()}</span>
 							</div>
 							<div class="news-attr-right">
 								<i class="far fa-comment"></i>
-								<span>${data.comments.length.toLocaleString()}</span>
+								<span>${data.comments.toLocaleString()}</span>
 							</div>
 						</div>
 
 						<div class="news-bottom">
-							<button class="news-bottom-like">
-								<i class="far fa-thumbs-up ${data.like ? 'likeTrue' : 'likeFalse'}"></i>
+							<button class="news-bottom-like ${data.like ? 'likeTrue' : 'likeFalse'}" data-board="${data.board.id}">
+								<i class="fa${data.like ? 's' : 'r'} fa-thumbs-up"></i>
 								<span>좋아요</span>
 							</button>
 
-							<button class="news-bottom-comment">
+							<button class="news-bottom-comment" data-board="${data.board.id}">
 								<i class="far fa-comment-dots"></i>
 								<span>댓글쓰기</span>
 							</button>

@@ -9,18 +9,20 @@ class UserController extends MasterController {
 
 	public function registerProcess()
 	{
-		$name = $_POST['name'];
-		$email = $_POST['email'];
+		$name = htmlentities($_POST['name']);
+		$email = htmlentities($_POST['email']);
 		$pwd = $_POST['pwd'];
 		$today = date("Y:m:d:H:i:s");
-		$sql = "INSERT INTO `sns_user`(`id`, `name`, `email`, `password`, `date`) VALUES (null,?,?,PASSWORD(?),?)";
-		$result = DB::query($sql,[$name,$email,$pwd,$today]);
+		$sql = "INSERT INTO `sns_user`(`id`, `name`, `email`, `password`, `da3te`) VALUES (null,?,?,PASSWORD(?),?)";
+		$sql = "INSERT INTO `sns_user`(`id`, `name`, `email`, `password`, `date`, `nick`, `profile`) VALUES (null,?,?,PASSWORD(?),?,'',?)";
+		$profile = "/imgs/user.png";
+		$result = DB::query($sql,[$name,$email,$pwd,$today,$profile]);
 		echo json_encode(['success' => $result],JSON_UNESCAPED_UNICODE);
 	}
 
 	public function loginProcess()
 	{
-		$email = $_POST['email'];
+		$email = htmlentities($_POST['email']);
 		$pwd = $_POST['pwd'];
 		$sql = "SELECT * FROM `sns_user` WHERE `email` = ? AND `password` = PASSWORD(?)";
 		$user = DB::fetch($sql,[$email,$pwd]);

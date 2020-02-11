@@ -459,6 +459,7 @@ header > .user-box > .user-container > .user-info > .user-text {
 	width: 560px;
 	height : 40px;
 	border: 1px solid #f4f4f4;
+	position: relative;
 	background-color: #fbfbfb;
 	margin: 0 auto;
 	margin-bottom: 10px;
@@ -1052,4 +1053,32 @@ header > .user-box > .user-container > .user-info > .user-text {
 	width: 40px;
 	height: 40px;
 	object-fit: cover;
+}
+
+.likeTrue {
+	color: rgb(32, 120, 244); 
+}
+
+#show_select {
+	position: absolute;
+	right: 10px;
+	top: 50%;
+	transform: translateY(-50%);
+	width: 100px;
+
+}
+
+.user-menu-circle {
+	width: 20px;
+	height: 20px;
+	background-color: #ff3838;
+	font-size: 12px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: #fff;
+	border-radius: 100%;
+	position: absolute;
+	right: 12px;
+	top: 12px;
 }

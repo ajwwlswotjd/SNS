@@ -27,6 +27,11 @@
 				<button class="clr form_btn_color" data-property="foreColor">
 					<i class="fas fa-tint"></i>
 				</button>
+				<select id="show_select">
+					<option value="all" selected>전체 공개</option>
+					<option value="friend">친구만 보기</option>
+					<option value="me">나만 보기</option>
+				</select>
 			</div>
 			<div class="editorDiv" contenteditable="true" placeholder="새로운 소식을 남겨보세요." spellcheck="false"></div>
 			<div class="form-image-box">
