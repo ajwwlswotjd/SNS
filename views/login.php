@@ -57,8 +57,8 @@
 			method:'post',
 			success : function(e){
 				let json = JSON.parse(e);
-				if(json.success) Swal.fire('성공',`반갑습니다. ${json.name}님`,'success').then((e)=>{ location.href = "/"});
-				else Swal.fire('실패',`등록되지않은 이메일 혹은 비밀번호가 올바르지 않습니다.`,'error')
+				if(json.success) Swal.fire('로그인 성공',`반갑습니다. ${json.name}님!`,'success').then((e)=>{ location.href = "/"});
+				else Swal.fire('로그인 실패',`등록되지않은 이메일 혹은 비밀번호가 올바르지 않습니다.`,'error')
 			}
 		});
 

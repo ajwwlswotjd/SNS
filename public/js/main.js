@@ -62,6 +62,73 @@ class App {
 		$(document).on('keydown',".news-comment-form > input",(e)=>{
 			if(e.keyCode == 13) e.target.parentNode.querySelector("button").click();
 		});
+		
+		$(document).on("click",".news-more-box-container > li:last-child",function(e){
+			let data = {};
+			data.board = this.dataset.board;
+			$.ajax({
+				data:data,
+				url:"/board/delete",
+				method:"POST",
+				success : (e)=>{
+					location.reload();
+				}
+			});
+		});
+
+		let slider = $(".image-box-container");
+		let isSliding = false;
+		let now = 0;
+		let length = 0;
+		let imgs = $(".image-box-container img");
+		$(".image-btn-box > button").on("click",function(e){
+			let dir = $(this).data("dir");
+			if(isSliding) return;
+			isSliding = true;
+			if(dir==0){
+				let next = now > 0 ? now - 1 : length;
+				$(imgs[now]).animate({right:"-100%"},1000,function(){isSliding = false});
+				$(imgs[next]).css({right:"100%"}).animate({right:0},1000);
+				now = next;
+				document.querySelector(".image-index > span:first-child").innerHTML = now+1;
+			}else {
+				let next = now < length ? now + 1 : 0;
+				$(imgs[now]).animate({right:"100%"},1000,function(){isSliding = false});
+				$(imgs[next]).css({right:"-100%"}).animate({right:0},1000);
+				now = next;
+				document.querySelector(".image-index > span:first-child").innerHTML = now+1;
+			}
+		});
+
+		document.querySelector("#image-popup").addEventListener("click",function(e){
+			if(e.target==this || e.target==document.querySelector(".image-popup-close")) $(this).fadeOut();
+		});
+
+		$(document).on("click",".news-img-box > span",(e)=>{
+			let data = {};
+			data.board = e.target.dataset.board;
+			$.ajax({
+				data:data,
+				method:"post",
+				url:"/board/load/img",
+				success: function(e){
+					let json = JSON.parse(e);
+					now = 0;
+					$(".image-box-container").html("");
+					json.list.forEach(x=>{
+						let img = document.createElement("img");
+						img.src = x.src;
+						$(".image-box-container").append(img);
+					});
+					imgs = $(".image-box-container img");
+					$(".image-box-container img").css({position : "absolute", right : "100%"});
+					length = imgs.length-1;
+					document.querySelector(".image-index > span:last-child").innerHTML = length+1;
+					$(".image-box-container img").eq(0).css({right:0, position:'relative'});
+					$("#image-popup").fadeIn();
+				}
+			});
+		});
 
 		$(document).on("click",".news-bottom-like",function(e){
 			let data = {};
@@ -84,7 +151,7 @@ class App {
 
 		$(document).on("click",".news-comment-form > button", function(e){
 			let value = this.parentNode.querySelector("input").value;
-			if($.trim(value)=="") Swal.fire('댓글을 작성해주세요.',"입력칸이 비었습니다!",'error');
+			if($.trim(value)=="") return;
 			else {
 				let data = {};
 				data.content = value;
@@ -218,7 +285,7 @@ class App {
 
 						<div class="news-img-box">
 							${ data.imgs.length > 0 ? `<img src="${data.imgs[0].src}" alt="">` : "" }
-							${ data.imgs.length > 1 ? `<span>이외의 ${data.imgs.length-1}가지 이미지 더 보기</span>` : ""}
+							${ data.imgs.length > 1 ? `<span data-board='${data.board.id}'>이외의 ${data.imgs.length-1}가지 이미지 더 보기</span>` : ""}
 						</div>
 
 						<div class="news-attr-box">
@@ -259,8 +326,8 @@ class App {
 
 						<div class="news-more-box">
 							<ul class="news-more-box-container">
-								${data.host ? `<li><i class="far fa-edit"></i><span>수정</span></li>` : ""}
-								${data.host ? `<li><i class="far fa-trash-alt"></i><span>삭제</span></li>` : ""}
+								${data.host ? `<li data-board="${data.board.id}"><i class="far fa-edit"></i><span>수정</span></li>` : ""}
+								${data.host ? `<li data-board="${data.board.id}"><i class="far fa-trash-alt"></i><span>삭제</span></li>` : ""}
 							</ul>
 						</div>
 					</div>

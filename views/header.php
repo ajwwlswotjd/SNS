@@ -76,19 +76,19 @@
 
 				<div class="tab2">
 					<div class="tab2-top">
-						<i class="fas fa-gamepad"></i>
-						<span>MapleStory</span>
+						<i class="fas fa-user"></i>
+						<span>USER</span>
 						<i class="fas fa-angle-down"></i>
 					</div>
 					<ul>
 						<li>
-							<a href="/">MaeWoo</a>
+							<a href="/user/profile/?id=<?= $_SESSION['user']->id ?>">PROFILE</a>
 						</li>
 						<li>
-							<a href="/">JaeMitNun</a>
+							<a href="/user/board/?id=<?= $_SESSION['user']->id ?>">BOARD</a>
 						</li>
 						<li>
-							<a href="/">Game</a>
+							<a href="/logout">LOGOUT</a>
 						</li>
 					</ul>
 				</div>

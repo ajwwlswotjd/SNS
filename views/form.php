@@ -27,11 +27,6 @@
 				<button class="clr form_btn_color" data-property="foreColor">
 					<i class="fas fa-tint"></i>
 				</button>
-				<select id="show_select">
-					<option value="all" selected>전체 공개</option>
-					<option value="friend">친구만 보기</option>
-					<option value="me">나만 보기</option>
-				</select>
 			</div>
 			<div class="editorDiv" contenteditable="true" placeholder="새로운 소식을 남겨보세요." spellcheck="false"></div>
 			<div class="form-image-box">
@@ -41,6 +36,29 @@
 				</button>
 			</div>
 			<div class="form-bottom">
+				<div class="input-box">
+					<div class="input-group">
+						<input type="radio" name="type" id="all" checked value="all">
+						<label for="all">
+							<i class="fas fa-users"></i>
+							전체 공개
+						</label>
+					</div>
+					<div class="input-group">
+						<input type="radio" name="type" id="friend" value="friend">
+						<label for="friend">
+							<i class="fas fa-user-friends"></i>
+							친구만 공개
+						</label>
+					</div>
+					<div class="input-group">
+						<input type="radio" name="type" id="me" value="me">
+						<label for="me">
+							<i class="fas fa-user"></i>
+							나만 보기
+						</label>
+					</div>
+				</div>
 				<button type="submit" class="form-submit">게시</button>
 			</div>
 		</div>		

@@ -17,13 +17,35 @@ class BoardController extends MasterController {
 		echo json_encode(['success'=> $result,"idx"=>$idx],JSON_UNESCAPED_UNICODE);
 	}
 
+	public function deleteProcess()
+	{
+		$idx = $_POST['board'];
+		$sql = "DELETE FROM `sns_board` WHERE `id` = ?";
+		DB::query($sql,[$idx]);
+		$sql = "DELETE FROM `sns_like` WHERE `board_idx` = ?";
+		DB::query($sql,[$idx]);
+		$sql = "DELETE FROM `sns_imgs` WHERE `board_idx` = ?";
+		DB::query($sql,[$idx]);
+		$sql = "DELETE FROM `sns_comment` WHERE `board_idx` = ?";
+		DB::query($sql,[$idx]);
+	}
+
+	public function loadImage()
+	{
+		$idx = $_POST['board'];
+		$sql = "SELECT * FROM `sns_imgs` WHERE `board_idx` =  ?";
+		$list = DB::fetchAll($sql,[$idx]);
+		echo json_encode(["list"=>$list],JSON_UNESCAPED_UNICODE);
+	}
+
 	public function uploadProcess()
 	{
-		$sql = "INSERT INTO `sns_board`(`id`, `content`, `writer`, `date`) VALUES (null,?,?,?)";
+		$sql = "INSERT INTO `sns_board`(`id`, `content`, `writer`, `date`,`type`) VALUES (null,?,?,?,?)";
 		$content = $_POST['value'];
 		$writer = $_SESSION['user']->id;
+		$type = $_POST['type'];
 		$today = date("Y:m:d:H:i:s");
-		$result = DB::query($sql,[$content,$writer,$today]);
+		$result = DB::query($sql,[$content,$writer,$today,$type]);
 		$sql = "SELECT * FROM `sns_board` ORDER BY `id` DESC LIMIT 0, 1";
 		$idx = DB::fetch($sql,[])->id;
 		echo json_encode(["success"=>$result,"idx"=>$idx],JSON_UNESCAPED_UNICODE);

@@ -6,6 +6,15 @@ use Gondr\DB;
 
 class UserController extends MasterController {
 
+	public function showUser()
+	{
+		var_dump($_GET);
+	}
+
+	public function userProfile()
+	{
+		$this->render("profile");
+	}
 
 	public function registerProcess()
 	{
@@ -13,10 +22,10 @@ class UserController extends MasterController {
 		$email = htmlentities($_POST['email']);
 		$pwd = $_POST['pwd'];
 		$today = date("Y:m:d:H:i:s");
-		$sql = "INSERT INTO `sns_user`(`id`, `name`, `email`, `password`, `da3te`) VALUES (null,?,?,PASSWORD(?),?)";
-		$sql = "INSERT INTO `sns_user`(`id`, `name`, `email`, `password`, `date`, `nick`, `profile`) VALUES (null,?,?,PASSWORD(?),?,'',?)";
+		$sql = "INSERT INTO `sns_user`(`id`, `name`, `email`, `password`, `date`, `nick`, `profile`,`ip`) VALUES (null,?,?,PASSWORD(?),?,'',?,?)";
 		$profile = "/imgs/user.png";
-		$result = DB::query($sql,[$name,$email,$pwd,$today,$profile]);
+		$ip = $_SERVER['REMOTE_ADDR'];
+		$result = DB::query($sql,[$name,$email,$pwd,$today,$profile,$ip]);
 		echo json_encode(['success' => $result],JSON_UNESCAPED_UNICODE);
 	}
 

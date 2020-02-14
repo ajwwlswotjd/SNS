@@ -580,7 +580,7 @@ header > .user-box > .user-container > .user-info > .user-text {
 	position: relative;
 	display: flex;
 	align-items: center;
-	justify-content: flex-end;
+	justify-content: space-between;
 }
 
 .form-bottom > .form-submit {
@@ -595,6 +595,45 @@ header > .user-box > .user-container > .user-info > .user-text {
 	cursor: pointer;
 	border:none;
 }
+
+.form-bottom > .input-box {
+	position: relative;
+	display: flex;
+	align-items: center;
+}
+
+.form-bottom > .input-box > .input-group {
+	position: relative;
+}
+
+.form-bottom > .input-box input {
+	display: none;
+}
+
+.form-bottom > .input-box input:checked ~ label {
+	color: #fff;
+	background-color: #474e60;
+	border : 1px solid #474e60;
+}
+.form-bottom > .input-box > .input-group:first-child > label {
+	margin-left: 10px;
+}
+
+.form-bottom > .input-box label {
+	padding: 6px 12px;
+	font-weight: bolder;
+	margin: 0 4px;
+	font-size: 14px;
+	background-color: transparent;
+	border : 1px solid #666;
+	color: #666;
+	cursor: pointer;
+	transition: all .2s;
+	border-radius: 6px;
+	height: 50px;	
+}
+
+
 
 .form-bottom > .form-submit:hover {
 	background-color: #383e4c;
@@ -1081,4 +1120,83 @@ header > .user-box > .user-container > .user-info > .user-text {
 	position: absolute;
 	right: 12px;
 	top: 12px;
+}
+
+#image-popup {
+	width: 100%;
+	height: 100vh;
+	position: fixed;
+	background-color: #0006;
+	z-index: 100;
+	display: none;
+}
+
+#image-popup > .image-popup-close {
+	font-size: 30px;
+	color: #ddd;
+	position: absolute;
+	right: 10px;
+	cursor: pointer;
+}
+
+
+#image-popup > .image-box {
+	max-width: 80%;
+	max-height: 80%;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%,-50%);
+	overflow: hidden;
+}
+
+#image-popup > .image-box > .image-box-container {
+	position: relative;
+	width: auto;
+	height: auto;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.image-box-container > img {
+	position: absolute;
+	right: 100%;
+	width: 100%;
+	height: 100%;
+	min-width: 300px;
+	min-height: 300px;
+	object-fit: contain;
+	object-position: center center;
+}
+
+#image-popup > .image-index {
+	position: absolute;
+	left: 50%;
+	transform: translateX(-50%);
+	bottom: 30px;
+	color: #fff;
+	font-size: 28px;
+}
+
+.image-btn-box {
+	width: 100%;
+	top: 50%;
+	position: relative;
+	transform: translateY(-50%);
+	display: flex;
+	justify-content: space-between;
+}
+
+.image-btn-box > button {
+	width: 50px;
+	height: 50px;
+	margin : 0 25px;
+	border-radius: 100%;
+	outline: none;
+	cursor: pointer;
+	border: none;
+	background-color: #333030;
+	color: #f4f5f9;
+	font-size: 25px;
 }

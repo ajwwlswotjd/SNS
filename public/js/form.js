@@ -92,8 +92,10 @@ class App {
 				return;
 			}
 			let idx;
+			let type = document.querySelector(".form-bottom > .input-box > .input-group > input:checked").value;
 			let formData = new FormData();
 			formData.append("value",value);
+			formData.append("type",type);
 			let xhr = new XMLHttpRequest();
 			xhr.open("POST","/board/upload/text");
 			xhr.addEventListener("load",(e)=>{
