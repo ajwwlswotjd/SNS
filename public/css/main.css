@@ -1193,8 +1193,8 @@ header > .user-box > .user-container > .user-info > .user-text {
 	height: 50px;
 	margin : 0 25px;
 	border-radius: 100%;
-	outline: none;
 	cursor: pointer;
+	outline: none;
 	border: none;
 	background-color: #333030;
 	color: #f4f5f9;

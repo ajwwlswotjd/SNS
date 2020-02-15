@@ -13,7 +13,20 @@ class UserController extends MasterController {
 
 	public function userProfile()
 	{
-		$this->render("profile");
+		$sql = "SELECT * FROM `sns_user` WHERE `id` = ?";
+		$user = DB::fetch($sql,[$_GET['id']]);
+		$sql = "SELECT COUNT(*) as cnt FROM `sns_friend` WHERE `status` = 1 AND `send_idx` = ? OR `rec_idx` = ?;";
+		$friendCnt = DB::fetch($sql,[$user->id,$user->id])->cnt;
+		$sql = "SELECT COUNT(*) as cnt FROM `sns_board` WHERE `writer` = ?";
+		$boardCnt = DB::fetch($sql,[$user->id])->cnt;
+		$this->render("profile",[$user,$friendCnt,$boardCnt]);
+	}
+
+	public function changeName()
+	{
+		$name = $_POST['name'];
+		$sql = "UPDATE FROM `sns_user` `name` = ? WHERE `id` = ?";
+		DB::query($sql,[$_SESSION['user']->id,$name]);
 	}
 
 	public function registerProcess()

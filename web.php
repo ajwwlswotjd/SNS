@@ -4,6 +4,9 @@ use Gondr\Route;
 
 use Gondr\DB;
 if(__SIGN){
+	$sql = "SELECT * FROM `sns_user` WHERE `id` = ?";
+	$user = DB::fetch($sql,[$_SESSION['user']->id]);
+	$_SESSION['user'] = $user;
 	$sql = "UPDATE `sns_user` SET `ip`=? WHERE `id` = ?";
 	$ip = $_SERVER['REMOTE_ADDR'];
 	$id = $_SESSION['user']->id;
@@ -20,6 +23,7 @@ Route::get("user/profile/",__SIGN ? "UserController@userProfile" : "MainControll
 Route::post("user/find","UserController@userFind");
 Route::post("user/join","UserController@registerProcess");
 Route::post("user/login","UserController@loginProcess");
+Route::post("user/name","UserController@changeName");
 
 Route::post("board/write","BoardController@formProcess");
 Route::post("board/upload/text","BoardController@uploadProcess");
