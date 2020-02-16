@@ -89,51 +89,52 @@ class BoardController extends MasterController {
 		$uid = $_SESSION['user']->id;
 		$start = $_POST['start']; // 3
 		$count = $_POST['cnt']; // 5
+		$sum = $start+$count;
 		$idx = $start; // 3
 		$total = false;
 		$list = array();
-		// $sql = "SELECT * FROM `sns_board` ORDER BY `date` LIMIT $start, $count";
-		// $result = DB::fetchAll($sql,[]);
 		$lastItem = null;
-		while(true){
-			if($idx >= $start+$count) break; //3일때 싹, 4일때 싹, 5 6 7 
+		while($idx < $sum){
 			$sql = "SELECT * FROM `sns_board` ORDER BY `date` DESC LIMIT $idx, 1";
 			$item = DB::fetch($sql,[]);
-			if($lastItem != null){
-				if($lastItem->id == $item->id){
-					$total = true;
-					break;
-				}
+			 if($lastItem != null){
+			 	if($lastItem->id == $item->id){
+			 		$total = true;
+			 		break;
+			 	}
+			 }
+			 if($item->type == "friend"){
+			 	$writer = $item->writer;
+			 	$sql = "SELECT * FROM `sns_friend` WHERE ((`send_idx` = ? AND `rec_idx` = ?) OR (`send_idx` = ? AND `rec_idx` = ?)) AND `status` = 1";
+			 	$isFrd = DB::fetch($sql,[$uid,$writer,$writer,$uid]);
+			 	// if(!$isFrd) continue;
 			}
-			if($item->type == "friend"){
-				// if($item->writer == $uid) return;
-				$writer = $item->writer;
-				$sql = "SELECT * FROM `sns_friend` WHERE ((`send_idx` = ? AND `rec_idx` = ?) OR (`send_idx` = ? AND `rec_idx` = ?)) AND `status` = 1";
-				$isFrd = DB::fetch($sql,[$uid,$writer,$writer,$uid]);
-				if(!$isFrd) continue;
-			}
-			if($item->type == "me"){
-				if($uid != $item->writer) continue;
-			}
-			$lastItem = $item;
-			$sql = "SELECT * FROM `sns_imgs` WHERE `board_idx` = ? ORDER BY `id` ASC";
-			$imgs = DB::fetchAll($sql,[$item->id]);
-			// 댓글 가져오기
-			$sql = "SELECT count(*) as cnt FROM `sns_comment` WHERE `board_idx` = ? ORDER BY `date` DESC";
-			$comments = DB::fetch($sql,[$item->id])->cnt;
-			// 글쓴이 정보 가져오기
-			$sql = "SELECT * FROM `sns_user` WHERE `id` = ?";
-			$user = DB::fetch($sql,[$item->writer]);
-			// 좋아요 리스트 가져오기
-			$sql = "SELECT count(*) as cnt FROM `sns_like` WHERE `board_idx` = ?";
-			$likeList = DB::fetch($sql,[$item->id])->cnt;
-			// 좋아요 눌렀는지 안눌렀는지
-			$sql = "SELECT * FROM `sns_like` WHERE `board_idx`= ? AND `user_idx` = ?";
-			$like = DB::fetch($sql,[$item->id, $_SESSION['user']->id]);
-			array_push($list, ["imgs"=>$imgs, "comments"=>$comments, "user"=>$user,"host"=>$_SESSION['user']->id === $item->writer, "board"=>$item, "likeList"=> $likeList, "like"=>$like]);
+
+			// if($item->type == "me"){
+			// 	if($uid != $item->writer) continue;
+			// }
+
+			// $lastItem = $item;
+			// $sql = "SELECT * FROM `sns_imgs` WHERE `board_idx` = ? ORDER BY `id` ASC";
+			// $imgs = DB::fetchAll($sql,[$item->id]);
+			// // 댓글 가져오기
+			// $sql = "SELECT count(*) as cnt FROM `sns_comment` WHERE `board_idx` = ? ORDER BY `date` DESC";
+			// $comments = DB::fetch($sql,[$item->id])->cnt;
+			// // 글쓴이 정보 가져오기
+			// $sql = "SELECT * FROM `sns_user` WHERE `id` = ?";
+			// $user = DB::fetch($sql,[$item->writer]);
+			// // 좋아요 리스트 가져오기
+			// $sql = "SELECT count(*) as cnt FROM `sns_like` WHERE `board_idx` = ?";
+			// $likeList = DB::fetch($sql,[$item->id])->cnt;
+			// // 좋아요 눌렀는지 안눌렀는지
+			// $sql = "SELECT * FROM `sns_like` WHERE `board_idx`= ? AND `user_idx` = ?";
+			// $like = DB::fetch($sql,[$item->id, $_SESSION['user']->id]);
+			// array_push($list, ["imgs"=>$imgs, "comments"=>$comments, "user"=>$user,"host"=>$_SESSION['user']->id === $item->writer, "board"=>$item, "likeList"=> $likeList, "like"=>$like]);
 			$idx++;
-			break;
+			echo $idx;
 		}
+		echo "탈출";
+		echo $idx;
 		echo json_encode(["list"=>$list,"success"=>true, "total"=>$total, "nowIndex"=>$idx],JSON_UNESCAPED_UNICODE);
 	}
 

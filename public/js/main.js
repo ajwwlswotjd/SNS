@@ -229,7 +229,20 @@ class App {
 		let data = {};
 		data.cnt = this.showCnt;
 		data.start = this.nowIndex;
-		log("나 에이젝스 보낼께!");
+
+		let formData = new FormData();
+		formData.append("cnt",this.showCnt);
+		formData.append("start",this.nowIndex);
+		let xhr = new XMLHttpRequest();
+		xhr.open("POST","/board/load");
+		xhr.addEventListener("load",(e)=>{
+			log(xhr.responseText);
+		});
+
+		xhr.send(formData);
+
+
+		// ajax 안되면 xhttp 폼전송으로 해보자
 		// $.ajax({
 		// 	data : data,
 		// 	url : "/board/load",
@@ -237,6 +250,7 @@ class App {
 		// 	success : (e)=>{
 		// 		log(e);
 		// 		let json = JSON.parse(e);
+		// 		log(json);
 		// 		setTimeout((e)=>{
 		// 			$("#spinner").fadeOut();
 		// 		 	if(json.total) $(".last-part").fadeIn();
