@@ -1,7 +1,7 @@
-<script src="/js/profile.js"></script>
 <?php if(!$data[0]) : ?>
 	<script>location.href="/error";</script>
 <?php endif; ?>
+<script src="/js/profile.js"></script>
 <link rel="stylesheet" href="/css/profile.css">
 <section id="main"><div id="main-container">
 	<div id="profile-section">
@@ -9,9 +9,19 @@
 			<div class="profile-img-blur" style="background-image: linear-gradient(to right,#0006,#0007), url('<?= $data[0]->profile ?>');"></div>	
 			<div class="profile-img-container">
 				<img src="<?= $data[0]->profile ?>" alt="">
+				<?php if($_SESSION['user']->id == $_GET['id']) : ?>
+					<div class="profile-img-change">프로필 변경</div>
+				<?php endif; ?>
 				<p class="profile-user-name"><?= htmlentities($data[0]->name) ?></p>
 				<p class="profile-user-email"><?= htmlentities($data[0]->email) ?></p>
-				<a href="/user/board/?id=<?= $_GET['id'] ?>" class="profile-user-btn">게시물 보기</a>
+				<div class="profile-user-btn-box">
+					<?php if($_SESSION['user']->id != $_GET['id']) : ?>
+						<button data-get="<?= $_GET['id'] ?>" class="profile-user-btn notMe" data-status="<?= $data[3] ?>">
+							<?= $data[4] ?>
+						</button>
+					<?php endif; ?>
+					<a href="/user/board/?id=<?= $_GET['id'] ?>" class="profile-user-btn">게시물 보기</a>
+				</div>
 			</div>
 		</div>
 
@@ -25,7 +35,7 @@
 				</div>
 				<?php if($_SESSION['user']->id === $_GET['id']) : ?>
 				<div class="profile-edit-box">
-					<input type="text" placeholder="별명을 작성해주세요." value="<?= htmlentities($_SESSION['user']->nick) ?>" maxlength="10">
+					<input type="text" placeholder="별명을 작성해주세요." value="<?= htmlentities($_SESSION['user']->nick) ?>" maxlength="20">
 					<button class="profile-edit-input-edit">확인</button>
 				</div>
 				<?php endif; ?>
@@ -59,10 +69,17 @@
 			</div>
 
 			<div class="profile-right-content">
-				<div class="profile-info-content">
-					<?php echo $data[0]->info=="" ? "소개글이 존재하지 않습니다." : $data[0]->info ?>
+				<div class="profile-right-show">
+					<textarea disabled class="profile-info-content"><?php echo $data[0]->info=="" ? "소개글이 존재하지 않습니다." : $data[0]->info ?></textarea>
+					<?php if($_SESSION['user']->id === $_GET['id']) : ?>
+					<button class="profile-info-edit">소개글 수정</button>
+					<?php endif; ?>
 				</div>
-				<button class="profile-info-edit">소개글 수정</button>
+
+				<div class="profile-right-input">
+					<textarea id="profile-right-textarea" placeholder="소개글을 작성해주세요 (최대 200자)" maxlength="200"><?= $data[0]->info ?></textarea>
+					<button id="profile-right-input-btn">확인</button>
+				</div>
 			</div>
 		</div>
 	</div>

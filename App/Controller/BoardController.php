@@ -85,15 +85,38 @@ class BoardController extends MasterController {
 
 	public function loadProcess()
 	{
-		$start = $_POST['start'];
-		$count = $_POST['cnt'];
-		$sql = "SELECT * FROM `sns_board` ORDER BY `date` DESC LIMIT $start, $count";
-		$result = DB::fetchAll($sql,[]);
+		// 와일문을 돌리고, $start 가 기존꺼보다 5번 늘어났으면 break 하면 됌 ㅇㅋ?
+		$uid = $_SESSION['user']->id;
+		$start = $_POST['start']; // 3
+		$count = $_POST['cnt']; // 5
+		$idx = $start; // 3
+		$total = false;
 		$list = array();
-		foreach ($result as $item) {
-
-			// 이미지 가져오기
-			$sql = "SELECT * FROM `sns_imgs` WHERE `board_idx` = ? ORDER BY `id` DESC";
+		// $sql = "SELECT * FROM `sns_board` ORDER BY `date` LIMIT $start, $count";
+		// $result = DB::fetchAll($sql,[]);
+		$lastItem = null;
+		while(true){
+			if($idx >= $start+$count) break; //3일때 싹, 4일때 싹, 5 6 7 
+			$sql = "SELECT * FROM `sns_board` ORDER BY `date` DESC LIMIT $idx, 1";
+			$item = DB::fetch($sql,[]);
+			if($lastItem != null){
+				if($lastItem->id == $item->id){
+					$total = true;
+					break;
+				}
+			}
+			if($item->type == "friend"){
+				// if($item->writer == $uid) return;
+				$writer = $item->writer;
+				$sql = "SELECT * FROM `sns_friend` WHERE ((`send_idx` = ? AND `rec_idx` = ?) OR (`send_idx` = ? AND `rec_idx` = ?)) AND `status` = 1";
+				$isFrd = DB::fetch($sql,[$uid,$writer,$writer,$uid]);
+				if(!$isFrd) continue;
+			}
+			if($item->type == "me"){
+				if($uid != $item->writer) continue;
+			}
+			$lastItem = $item;
+			$sql = "SELECT * FROM `sns_imgs` WHERE `board_idx` = ? ORDER BY `id` ASC";
 			$imgs = DB::fetchAll($sql,[$item->id]);
 			// 댓글 가져오기
 			$sql = "SELECT count(*) as cnt FROM `sns_comment` WHERE `board_idx` = ? ORDER BY `date` DESC";
@@ -107,10 +130,11 @@ class BoardController extends MasterController {
 			// 좋아요 눌렀는지 안눌렀는지
 			$sql = "SELECT * FROM `sns_like` WHERE `board_idx`= ? AND `user_idx` = ?";
 			$like = DB::fetch($sql,[$item->id, $_SESSION['user']->id]);
-
 			array_push($list, ["imgs"=>$imgs, "comments"=>$comments, "user"=>$user,"host"=>$_SESSION['user']->id === $item->writer, "board"=>$item, "likeList"=> $likeList, "like"=>$like]);
+			$idx++;
+			break;
 		}
-		echo json_encode(["list"=>$list,"success"=>true, "nowIndex"=>$start+$count],JSON_UNESCAPED_UNICODE);
+		echo json_encode(["list"=>$list,"success"=>true, "total"=>$total, "nowIndex"=>$idx],JSON_UNESCAPED_UNICODE);
 	}
 
 	public function likeProcess()

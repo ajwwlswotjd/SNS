@@ -156,6 +156,10 @@
 				}
 			});
 
+			$(".logo-container > img").on("click",(e)=>{
+				location.href = "/";
+			});
+
 			let searchMod = false;
 
 			function search(){
@@ -184,5 +188,9 @@
 			$("#search-input").on("focusout",(e)=>{
 				searchMod = !e.target.value=="";
 				if(!searchMod) e.target.style.display = "none";
+			});
+
+			$(".user-box").on("click",(e)=>{
+				location.href = document.querySelector("#tab-menu > .tab2:last-child > ul > li:first-child > a").getAttribute("href");
 			});
 		</script>

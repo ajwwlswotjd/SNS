@@ -23,7 +23,10 @@ Route::get("user/profile/",__SIGN ? "UserController@userProfile" : "MainControll
 Route::post("user/find","UserController@userFind");
 Route::post("user/join","UserController@registerProcess");
 Route::post("user/login","UserController@loginProcess");
-Route::post("user/name","UserController@changeName");
+Route::post("user/nick","UserController@nickChange");
+Route::post("user/info","UserController@infoChange");
+Route::post("user/img","UserController@imgChange");
+Route::post("user/friend","UserController@friendProcess");
 
 Route::post("board/write","BoardController@formProcess");
 Route::post("board/upload/text","BoardController@uploadProcess");

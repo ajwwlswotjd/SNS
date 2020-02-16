@@ -51,6 +51,14 @@ class App {
 			}
 		});
 
+		$(document).on("click",".news-top-icon",function(e){
+			location.href = "/user/profile/?id="+this.parentNode.dataset.id;
+		});
+
+		$(document).on("click",".news-top-info",function(e){
+			location.href = "/user/profile/?id="+this.parentNode.dataset.id;
+		});
+
 		$(document).on("click",".news-attr-right",function(e){
 			this.parentNode.parentNode.querySelector(".news-bottom > .news-bottom-comment").click();
 		});
@@ -219,39 +227,28 @@ class App {
 		if(this.loadingData) return;
 		this.loadingData = true;
 		let data = {};
+		data.cnt = this.showCnt;
 		data.start = this.nowIndex;
-		let data1 = {};
-		$.ajax({
-			data: data1,
-			url:"/board/cnt",
-			method: "POST",
-			success : (e)=>{
-				let json = JSON.parse(e);
-				this.totalCnt = json.cnt;
-				if(this.totalCnt == this.nowIndex) return;
-				$("#spinner").fadeIn();
-				$(".last-part").fadeOut();
-				data.cnt = this.showCnt+this.nowIndex > this.totalCnt ? this.totalCnt - this.nowIndex : this.showCnt;
-				$.ajax({
-					data : data,
-					url : "/board/load",
-					method : "POST",
-					success : (e)=>{
-						let json = JSON.parse(e);
-						setTimeout((e)=>{
-							$("#spinner").fadeOut();
-							this.loadingData = false;
-							this.nowIndex = json.nowIndex;
-							if(this.nowIndex == this.totalCnt) $(".last-part").fadeIn();
-							json.list.forEach(x=>{
-								let div = this.getForm(x);
-								document.querySelector(".news-part-container").appendChild(div);
-							});
-						},10);
-					}
-				});
-			}
-		});
+		log("나 에이젝스 보낼께!");
+		// $.ajax({
+		// 	data : data,
+		// 	url : "/board/load",
+		// 	method : "POST",
+		// 	success : (e)=>{
+		// 		log(e);
+		// 		let json = JSON.parse(e);
+		// 		setTimeout((e)=>{
+		// 			$("#spinner").fadeOut();
+		// 		 	if(json.total) $(".last-part").fadeIn();
+		// 		 	this.nowIndex = json.nowIndex;
+		// 		 	json.list.forEach(x=>{
+		// 		 		let div = this.getForm(x);
+		// 		 		document.querySelector(".news-part-container").appendChild(div);
+		// 		 	});
+		// 		 	this.loadingData = false;
+		// 		 },10);
+		// 	}
+		// });
 	}
 
 	getForm(data){
@@ -259,7 +256,7 @@ class App {
 		div.classList.add("news_part");
 		div.innerHTML = `
 			<div class="news-container">
-						<div class="news-top">
+						<div class="news-top" data-id="${data.user.id}">
 
 							<div class="news-top-icon">
 								<img src="${data.user.profile}" alt="">
@@ -338,23 +335,23 @@ class App {
 	dateToString(date){
 		date += "";
 		let dateArr = date.split(":");
-		let now = new Date();
-		let nowStr = ""+now.getFullYear()+this.preZero(now.getMonth()+1)+this.preZero(now.getDate())+this.preZero(now.getHours())+this.preZero(now.getMinutes())+this.preZero(now.getSeconds());
-		let dateStr = "";
-		dateArr.forEach(x=> dateStr += x);
-		let diff =  nowStr - dateStr;
+		let today = new Date();
+		let dateTemp = new Date();
+		dateTemp.setFullYear(dateArr[0],dateArr[1]-1,dateArr[2]);
+		dateTemp.setHours(dateArr[3],dateArr[4],dateArr[5],0);
+		let diff = (today - dateTemp)/1000;
 		if(diff < 0){
 			let ojh = dateArr[3] > 11 ? "오후" : "오전";
 			let hour = dateArr[3] > 12 ? dateArr[3]-12 : dateArr[3];
 			let str = dateArr[0]+"년 "+this.delZero(dateArr[1])+"월 "+this.delZero(dateArr[2])+"일 "+ojh+" "+hour+":"+dateArr[4];
 			return str;
 		}
-		else if(diff < 60) return diff+"초 전";
-		else if(diff < 3600) return Math.floor(diff/60)+"분 전";
-		else if(diff < 86400) return Math.floor(diff/3600)+"시간 전";
-		else if(diff < 604800) return Math.floor(diff/86400)+"일 전";
-		else if(diff < 2592000) return Math.floor(diff/604800)+"주 전";
-		else if(diff < 31104000) return Math.floor(diff/2592000)+"달 전";
+		else if(diff < 60) return Math.floor(diff)+"초 전";
+		else if(diff < 3600) return Math.floor(Math.ceil(diff/60))+"분 전";
+		else if(diff < 86400) return Math.floor(Math.ceil(diff/3600))+"시간 전";
+		else if(diff < 604800) return Math.floor(Math.ceil(diff/86400))+"일 전";
+		else if(diff < 2592000) return Math.floor(Math.ceil(diff/604800))+"주 전";
+		else if(diff < 31104000) return Math.floor(Math.ceil(diff/2592000))+"달 전";
 		else {
 			let ojh = dateArr[3] > 11 ? "오후" : "오전";
 			let hour = dateArr[3] > 12 ? dateArr[3]-12 : dateArr[3];

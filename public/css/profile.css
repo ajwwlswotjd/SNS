@@ -23,6 +23,7 @@
 .profile-img-blur {
 	position: absolute;
 	filter: blur(5px);
+	background-color: #fff;
 	background-size: cover;
 	background-position: center center;
 	width: 100%;
@@ -46,7 +47,32 @@
 	border-radius: 100%;
 	object-fit: cover;
 	border: 1px solid #fff5;
+	background-color: #fff;
 	box-sizing: content-box;
+}
+
+.profile-img-change {
+	position: absolute;
+	width: 100px;
+	height: 100px;
+	border-radius: 100%;
+	object-fit: cover;
+	z-index: 100;
+	border: 1px solid #fff5;
+	box-sizing: content-box;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	background-color: #0007;
+	color: #fff;
+	font-size: 11px;
+	opacity: 0;
+	cursor: pointer;
+	transition: opacity .4s;
+}
+
+.profile-img-container > .profile-img-change:hover {
+	opacity: 1;
 }
 
 .profile-img-container > .profile-user-email {
@@ -63,8 +89,18 @@
 	margin-top: 10px;
 }
 
-.profile-img-container > .profile-user-btn {
+.profile-user-btn-box {
+	position: relative;
+	display: flex;
+}
+
+.notMe {
+	margin-right: 10px;
+}
+
+.profile-img-container > .profile-user-btn-box > .profile-user-btn {
 	width: 100px;
+	outline: none;
 	height: 40px;
 	background-color: transparent;
 	border : 1px solid #fff;
@@ -136,8 +172,9 @@
 }
 
 .profile-right-top > .profile-edit-box > input {
-	width: 200px;
+	width: 330px;
 	margin-left: 30px;
+	outline:none;
 	height: 30px;
 	font-size: 14px;
 	padding: 0 15px;
@@ -202,8 +239,104 @@
 
 .profile-info-content {
 	width: 100%;
-	height: 160px;
-	color: #222;
+	height: 150px;
+	color: #212122;
 	font-size: 14px;
-	padding: 10px 30px;
+	padding: 15px 30px;
+	font-weight: 400;
+	overflow-y: auto;
+	resize: none;
+	background-color: transparent;
+	border:none;
+}
+
+.profile-info-content::-webkit-scrollbar {
+	width: 8px;  /* 스크롤 너비 */
+	background: none; /* 스크롤 전체 배경화면 */
+}
+
+.profile-info-content::-webkit-scrollbar-thumb {
+	background-color: #33303066;
+	transition: background-color .3s;
+	border-radius: 10px;
+}
+
+.profile-info-content::-webkit-scrollbar-thumb:hover {
+	background-color: #333030aa;
+}
+
+.profile-info-content::-webkit-scrollbar-track {
+	background: none;
+	height: 10px;
+}
+
+.profile-info-edit {
+	width: 73px;
+	height: 20px;
+	font-size: 11px;
+	padding: 0px 5px;
+	border: 1px solid #eee;
+	background: transparent;
+	cursor: pointer;
+	color: #9f958f;
+	outline: none;
+	position: relative;
+	left: 20px;
+}
+
+.profile-right-show {
+	position: relative;
+}
+
+.profile-right-input {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	display: none;
+	margin-top: 20px;
+}
+
+#profile-right-textarea::-webkit-scrollbar {
+	width: 8px;  /* 스크롤 너비 */
+	background: none; /* 스크롤 전체 배경화면 */
+}
+
+#profile-right-textarea::-webkit-scrollbar-thumb {
+	background-color: #33303066;
+	transition: background-color .3s;
+	border-radius: 10px;
+}
+
+#profile-right-textarea::-webkit-scrollbar-thumb:hover {
+	background-color: #333030aa;
+}
+
+#profile-right-textarea::-webkit-scrollbar-track {
+	background: none;
+	height: 10px;
+}
+
+#profile-right-textarea {
+	width: 550px;
+	height: 150px;
+	color: #212121;
+	font-size: 14px;
+	padding: 10px 20px;
+	font-weight: 400;
+	overflow-y: auto;
+	resize: none;
+	border : 1px solid rgb(238,238,238);
+	border-right: none;
+	outline: none;
+}
+
+#profile-right-input-btn {
+	width: 100px;
+	height: 150px;
+	background: rgb(250,250,250);
+	color: rgb(136,136,136);
+	font-size: 14px;
+	border: 1px solid rgb(238,238,238);
+	outline: none;
+	cursor: pointer;
 }
